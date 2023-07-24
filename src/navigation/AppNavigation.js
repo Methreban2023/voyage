@@ -3,6 +3,8 @@ import ROUTES from ".";
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
 import UserContext from "../context/UserContext";
+import TripCard from "../screens/TripCard";
+import SignIn from "../screens/SignIn";
 // import Thankyou from "../screens/Thankyou";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -24,25 +26,38 @@ const AppNavigation = () => {
           ),
         }}
       />
-
-      <Tab.Screen
-        name={ROUTES.APPROUTES.CARD}
-        component={TripCard}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="pluscircle" size={24} color={colors.orange} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={ROUTES.APPROUTES.PROFILE}
-        component={Profile}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user-circle" size={24} color={colors.orange} />
-          ),
-        }}
-      />
+      {user ? (
+        <Tab.Screen
+          name={ROUTES.APPROUTES.CARD}
+          component={TripCard}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="pluscircle" size={24} color={colors.orange} />
+            ),
+          }}
+        />
+      ) : null}
+      {user ? (
+        <Tab.Screen
+          name={ROUTES.APPROUTES.PROFILE}
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome name="user-circle" size={24} color={colors.orange} />
+            ),
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name={ROUTES.AUTHROUTES.SIGNIN}
+          component={SignIn}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="adduser" size={24} color={colors.orange} />
+            ),
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 };
