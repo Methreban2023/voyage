@@ -55,6 +55,16 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
         >
           {title}
         </Text>
+        <Text
+          style={{
+            color: "white",
+            zIndex: 2,
+            position: "absolute",
+            fontSize: 20,
+          }}
+        >
+          {description}
+        </Text>
       </View>
     </TouchableHighlight>
   );
