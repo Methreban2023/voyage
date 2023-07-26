@@ -13,18 +13,22 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth/auth";
 import { colors } from "../utils/colors/colors";
 import { saveToken } from "../apis/auth/storage";
+import UserContext from "../context/UserContext";
+
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({});
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const { setUser } = UserContext(UserContext);
 
   const { mutate: signupFn, error } = useMutation({
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
       console.log(data);
-      // navigation.navigate(ROUTES.AUTHROUTES.)}
+      setUser(true);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
@@ -89,16 +93,6 @@ const SignUp = ({ navigation }) => {
           setUserInfo({ ...userInfo, lastName: value });
         }}
         placeholder="Last Name"
-      />
-
-      <Text style={styles.text}>Email</Text>
-      <TextInput
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(value) => {
-          setUserInfo({ ...userInfo, email: value });
-        }}
-        placeholder="email"
       />
 
       <Text style={styles.text}>Password</Text>
