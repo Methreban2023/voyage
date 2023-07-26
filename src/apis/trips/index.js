@@ -29,4 +29,30 @@ const createTrip = async (data) => {
   return res.data;
 };
 
-export { getAllTrips, getTripById, createTrip };
+const updateTrip = async (id, data) => {
+  const formData = new FormData();
+
+  for (const key in data) {
+    if (key != "image") {
+      formData.append(key, data[key]);
+    }
+  }
+
+  formData.append("image", {
+    name: data.image,
+    type: "image/jpeg",
+    uri: data.image,
+  });
+
+  const res = await instance.put(`/trip/${id}`, formData);
+  return res.data;
+};
+
+
+const deleteTrip = async (id) => {
+  const res = await instance.delete(`/trip/${id}`);
+  return res.data;
+};
+
+
+export { getAllTrips, getTripById, createTrip,updateTrip, deleteTrip };
