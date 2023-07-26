@@ -9,6 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../utils/colors/colors";
 import { useContext } from "react";
+import TripCard from "../components/trips/TripCard";
 
 const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
