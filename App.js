@@ -10,8 +10,8 @@ import AppNavigation from "./src/navigation/AppNavigation";
 export default function App() {
   const [user, setUser] = useState(false);
 
-  const checkToken = () => {
-    const token = getToken();
+  const checkToken = async () => {
+    const token = await getToken();
     if (token) {
       setUser(true);
     }
