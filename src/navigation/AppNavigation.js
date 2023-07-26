@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ROUTES from "./routes";
-import Home from "../screens/Home";
-import Profile from "../screens/Profile";
+import ProfileNavigation from "./ProfileNavigation";
 import UserContext from "../context/UserContext";
 import TripCard from "../screens/TripCard";
 import AuthNavigation from "./AuthNavigation";
@@ -38,7 +37,7 @@ const AppNavigation = () => {
       {user ? (
         <Tab.Screen
           name={ROUTES.APPROUTES.PROFILE}
-          component={Profile}
+          component={ProfileNavigation}
           options={{
             tabBarIcon: ({ color, size }) => (
               <AntDesign name="user" size={24} color={colors.orange} />
