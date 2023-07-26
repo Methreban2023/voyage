@@ -8,7 +8,10 @@ import AuthNavigation from "./AuthNavigation";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../utils/colors/colors";
 import { useContext } from "react";
+
+
 import HomeNavigation from "./HomeNavigation";
+
 
 const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
