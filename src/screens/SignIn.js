@@ -10,7 +10,7 @@ import { TextInput } from "react-native-paper";
 import React, { useContext, useState } from "react";
 import { colors } from "../utils/colors/colors";
 import { signIn } from "../apis/auth/auth";
-import ROUTES from "../navigation";
+import ROUTES from "../navigation/routes";
 import { useMutation } from "@tanstack/react-query";
 import UserContext from "../context/UserContext";
 import { saveToken } from "../apis/auth/storage";
@@ -63,6 +63,7 @@ const SignIn = ({ navigation }) => {
             title="SignIn"
             onPress={() => {
               signinFn();
+              navigation.navigate(ROUTES.APPROUTES.HOME);
             }}
           />
         </View>
@@ -87,7 +88,7 @@ const SignIn = ({ navigation }) => {
             height: "100%",
             width: "100%",
             position: "absolute",
-            backgroundColor: "#00000090",
+            backgroundColor: colors.black,
             zIndex: 1,
             justifyContent: "center",
             alignItems: "center",
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
   },
   image: {
     width: 350,

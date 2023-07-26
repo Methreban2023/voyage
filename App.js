@@ -1,13 +1,12 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthNavigation from "./src/navigation/AuthNavigation";
 import { StatusBar, SafeAreaView, StyleSheet, Platform } from "react-native";
-import AppNavigation from "./src/navigation/AppNavigation";
-// import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import UserContext from "./src/context/UserContext";
 import { getToken } from "./src/apis/auth/storage";
-const isAndroid = Platform.OS === "android";
+import AppNavigation from "./src/navigation/AppNavigation";
+// const isAndroid = Platform.OS === "android";
 export default function App() {
   const [user, setUser] = useState(false);
 
