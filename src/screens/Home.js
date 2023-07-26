@@ -17,12 +17,12 @@ const Home = ({ navigation }) => {
     setSelectedTrips(selectedTrips.filter((trip) => trip != title));
   };
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.15 }}>
+    <View style={{ flex: 1, backgroundColor: "yellow" }}>
+      <View style={{ flex: 1, backgroundColor: "blue" }}>
         <TripList handleAddTrip={handleAddTrip} />
       </View>
 
-      {selectedTrips.length != 0 ? (
+      {/* {selectedTrips.length != 0 ? (
         <View>
           <View style={{ flex: 0.08 }}>
             <FilterList list={selectedTrips} onPress={removeFromTrips} />
@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
         </View>
       ) : (
         <View style={{ flex: 0.85 }}></View>
-      )}
+      )} */}
     </View>
   );
 };

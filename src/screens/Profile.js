@@ -7,8 +7,8 @@ import { removeToken } from "../apis/auth/storage";
 const Profile = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const pressHandler = () => {
-    setUser(false);
     removeToken();
+    setUser(false);
   };
   return (
     <View>

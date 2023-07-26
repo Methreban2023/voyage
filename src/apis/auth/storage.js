@@ -11,6 +11,7 @@ const saveToken = async (token) => {
 const getToken = async () => {
   try {
     const token = await SecureStore.getItemAsync("token");
+
     return token;
   } catch (error) {
     console.log("error while getting token", error);
