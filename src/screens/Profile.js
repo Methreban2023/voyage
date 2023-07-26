@@ -13,6 +13,8 @@ const Profile = ({ navigation }) => {
   return (
     <View>
       <Text>Profile</Text>
+      <View></View>
+      <View></View>
       <Button
         title="SignOut"
         onPress={() => {
