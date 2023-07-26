@@ -3,6 +3,7 @@ import instance from "../index";
 
 const signIn = async (userInfo) => {
   // try {
+  console.log("Calling signin api");
   const res = await instance.post("/users/auth/signin", userInfo);
   // storeToken(data.access);
   console.log(res.data);

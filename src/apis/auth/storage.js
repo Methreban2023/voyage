@@ -2,8 +2,7 @@ import * as SecureStore from "expo-secure-store";
 
 const saveToken = async (token) => {
   try {
-    const token = await SecureStore.setItemAsync("token", token);
-    return token;
+    await SecureStore.setItemAsync("token", token);
   } catch (error) {
     console.log("error while saving token", error);
   }
