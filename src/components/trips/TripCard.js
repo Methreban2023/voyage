@@ -9,6 +9,7 @@ import React from "react";
 import { BASE_URL } from "../../apis/";
 
 const TripCard = ({ title, image, onPress = () => {} }) => {
+  console.log(image);
   // console.log(image.includes("media") ? `${BASE_URL}/${image}` : image);
   return (
     <TouchableHighlight

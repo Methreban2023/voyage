@@ -8,9 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../utils/colors/colors";
 import { useContext } from "react";
 
-
 import HomeNavigation from "./HomeNavigation";
-
 
 const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
@@ -18,7 +16,7 @@ const AppNavigation = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name={ROUTES.APPROUTES.HOME}
+        name={ROUTES.APPROUTES.HOME_NAV}
         component={HomeNavigation}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -39,7 +37,7 @@ const AppNavigation = () => {
       ) : null}
       {user ? (
         <Tab.Screen
-          name={ROUTES.APPROUTES.PROFILE}
+          name={ROUTES.APPROUTES.PROFILE_NAV}
           component={ProfileNavigation}
           options={{
             tabBarIcon: ({ color, size }) => (
@@ -49,7 +47,7 @@ const AppNavigation = () => {
         />
       ) : (
         <Tab.Screen
-          name={ROUTES.AUTHROUTES.SIGNIN}
+          name={ROUTES.AUTHROUTES.SIGNIN_NAV}
           component={AuthNavigation}
           options={{
             tabBarIcon: ({ color, size }) => (

@@ -23,10 +23,15 @@ const SignIn = ({ navigation }) => {
     error,
     isLoading,
   } = useMutation({
-    mutationFn: () => signIn(userInfo),
+    mutationFn: () => {
+      console.log("calling sign in in mutation");
+      return signIn(userInfo);
+    },
     onSuccess: (data) => {
+      console.log("it should work ", data.token);
       saveToken(data.token);
       setUser(true);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
@@ -39,7 +44,7 @@ const SignIn = ({ navigation }) => {
           source={require("../media/blackLogo.png")}
           style={styles.image}
         />
-        <View style={styles.entery}>
+        <View style={[styles.entery, { flex: 1 }]}>
           <Text style={styles.text}>Username</Text>
           <TextInput
             style={styles.input}
@@ -62,8 +67,8 @@ const SignIn = ({ navigation }) => {
           <Button
             title="SignIn"
             onPress={() => {
+              console.log("calling sign in");
               signinFn();
-              navigation.navigate(ROUTES.APPROUTES.HOME);
             }}
           />
         </View>

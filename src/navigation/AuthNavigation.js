@@ -15,10 +15,10 @@ const AuthNavigation = () => {
       <Stack.Screen name={ROUTES.AUTHROUTES.SIGNIN} component={SignIn} />
       <Stack.Screen name={ROUTES.AUTHROUTES.SIGNUP} component={SignUp} />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={ROUTES.AUTHROUTES.FORGOT}
         component={ForgotPassword}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
