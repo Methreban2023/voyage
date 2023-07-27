@@ -1,20 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useContext } from "react";
 import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { colors } from "../utils/colors/colors";
-import { MaterialIcons } from "@expo/vector-icons";
-import ROUTES from "../navigation/routes";
-
+import { getProfile } from "../apis/";
 const Profile = ({ navigation }) => {
-  const { setUser } = useContext(UserContext);
-  // const [userInfo, setUserInfo] = useState({});
-  // const editProfileHandler = () => {
-  //   navigation.navigate(ROUTES.APPROUTES.EDITPROFILE, { userInfo, setUserInfo } });
-  // };
+  const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
+  const { data: dataProfile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
   const pressHandler = () => {
     removeToken();
     setUser(false);
