@@ -1,11 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useContext } from "react";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
 import { getProfile } from "../apis/";
-const Profile = ({ navigation }) => {
+import { useQuery } from "@tanstack/react-query";
+import { colors } from "../utils/colors/colors";
+import { MaterialIcons } from "@expo/vector-icons";
+const Profile = () => {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
   const { data: dataProfile } = useQuery({
