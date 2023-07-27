@@ -7,25 +7,77 @@ import {
   View,
   Image,
   Pressable,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker";
-import DatePicker, { getFormatedDate } from "react-native-datepicker";
+import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { colors } from "../utils/colors/colors";
+// import CountryCodeDropdownPicker from 'react-native-dropdown-country-picker'
 // import { useMutation } from "@tanstack/react-query";
 // import { colors } from "../utils/colors/colors";
 
 // const { setTrip } = useContext(TripContext);
-import theme from "../../constants/theme";
+import theme, { COLORS, FONTS } from "../../constants/theme";
 import { createTrip } from "../apis/trips";
+import { CLOSING } from "ws";
+import { useMutation, useQueryClient } from "@tanstack/react-query/build/lib";
+import ROUTES from "../navigation/routes";
+import CountryPicker from 'react-native-country-picker-modal';
+
+
+
 
 const CreateTrip = ({ navigation }) => {
 
   const [tripInfo, setTripInfo] = useState({});
   const [image, setImage] = useState(null);
-  const [tripDetail, setTripDetail] = useState("");
+  const [date, setDate] = useState(new Date(1598051730000));
+const queryClient = useQueryClient()
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+ 
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  
+    const handleCountrySelect = (country) => {
+      setSelectedCountry(country.name);
+    };
+  const {mutate:createTripFunction, }=useMutation({
+    mutationFn:()=>createTrip({
+      title:tripInfo.title,
+      description:tripInfo.description, 
+      image:image,
+      tripDate:date, 
 
+    }), 
+    onSuccess:()=>{
+      queryClient.invalidateQueries(['trips'])
+      navigation.navigate(ROUTES.APPROUTES.HOME)
+    }
+  })
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
 
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  const showCountrypicker = () => {
+    showMode('Country');
+  };
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -39,27 +91,11 @@ const CreateTrip = ({ navigation }) => {
     }
   };
 
-//Date picker
-const [openStartDatePicker, SetOpenStartDatePicker] = useState(false);
-  const today = new Date();
-  const startDate = getFormatedDate(
-    today.setDate(today.getDate() + 1),
-    "YYYY/MM/DD"
-  );
-
-  const [selectedStartDate, setSelectedStartDate] = useState("01/01/1990");
-  const [startedDate, setStartedDate] = useState("12/12/2023");
-
-  const handleChangeStartDate = (propData) => {
-    setStartedDate(propData);
-  };
-
-  const handleOnPressStartDate = () => {
-    SetOpenStartDatePicker(!openStartDatePicker);
-  };
+console.log(tripInfo)
 
 
   return (
+   
     <View style={styles.container}>
       <Text>Create</Text>
       <Pressable onPress={pickImage}>
@@ -88,72 +124,74 @@ const [openStartDatePicker, SetOpenStartDatePicker] = useState(false);
       <TextInput
         style={styles.input}
         onChangeText={(value) => {
-          setTripDetail({ ...tripDetail, description: value });
+          setTripInfo({ ...tripInfo, description: value });
         }}
         placeholder="Description"
       />
   
 
-  <Text style={styles.text}>Trip Date</Text>
- 
-  <Modal
-        animationType="slide"
-        transparent={true}
-        visible={openStartDatePicker}
-      >
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <View
-            style={{
-              margin: 20,
-              backgroundColor: COLORS.primary,
-              alignItems: "center",
-              borderRadius: 20,
-              padding: 35,
-              width: "90%",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 4,
-              elevation: 5,
-            }}
-          >
-            <DatePicker
-              mode="calendar"
-              minimumDate={startDate}
-              selected={startDate}
-              onDateChanged={handleChangeStartDate}
-              onSelectedChange={(date) => setSelectedStartDate(date)}
-              options={{
-                backgroundColor: COLORS.primary,
-                textHeaderColor: "#469ab6",
-                textDefaultColor: "COLORS.white",
-                selectedTextColor: "COLORS.white",
-                mainColor: "#469ab6",
-                textSecondaryColor: COLORS.white,
-                borderColor: "rgba(122,146,156,0.1)",
-              }}
-            />
-            <TouchableOpacity onPress={handleOnPressStartDate}>
-              <Text style={{ ...FONTS.body3, color: COLORS.white }}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+  <Text style={styles.text}>Trip Destination</Text>
+  <>
+  <Button onPress={showCountrypicker} title="Show country picker!" />
+    
+      {show && (
+        <View style={styles.countryStyle}>
+        <CountryPicker
+          withFilter
+          withFlag
+          withCountryNameButton
+          withAlphaFilter
+          onSelect={handleCountrySelect}
+        
+        />
+        {selectedCountry && (
+          <Text style={styles.selectedCountryText}>Selected Country: {selectedCountry}</Text>
+        )}
+     
+    </View>
+      )}
+    </>
+ <>
+ {/* <Button title="Choose Counrty"
+        onPress={() => {
+
+        }}
+       />
+ <View style={styles.countryStyle}>
+      <CountryPicker
+        withFilter
+        withFlag
+        withCountryNameButton
+        withAlphaFilter
+        onSelect={handleCountrySelect}
+      />
+      {selectedCountry && (
+        <Text style={styles.selectedCountryText}>Selected Country: {selectedCountry}</Text>
+      )}
+   
+  </View> */}
   
+    </>
+ <Text style={styles.text}>Trip Date</Text>
+  <>
+  <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showTimepicker} title="Show time picker!" />
+      <Text>selected: {date.toLocaleString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+    </>
 
   <Button
         title="Create"
         onPress={() => {
-          createTrip();
+          createTripFunction();
         }}
       />
     </View>
@@ -202,4 +240,16 @@ const styles = StyleSheet.create({
     borderRadius: 130,
     overflow: "hidden",
   },
+
+    countryStyle: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+    },
+    selectedCountryText: {
+      fontSize: 18,
+      marginTop: 20,
+    },
+
 });
