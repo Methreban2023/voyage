@@ -17,7 +17,9 @@ import UserContext from "../context/UserContext";
 
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({});
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(
+    "https://www.pngitem.com/middle/hwxmbmT_empty-profile-picture-png-transparent-png/"
+  );
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const { setUser } = useContext(UserContext);
@@ -46,6 +48,10 @@ const SignUp = ({ navigation }) => {
     console.log(result);
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+    } else {
+      setImage(
+        "https://www.pngitem.com/middle/hwxmbmT_empty-profile-picture-png-transparent-png/"
+      );
     }
   };
 
