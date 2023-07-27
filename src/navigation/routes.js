@@ -12,8 +12,9 @@ const ROUTES = {
     HOME_NAV: "HomeNavigation",
     HOME: "Home",
     PROFILE: "Profile",
-    CARD: "TripCard",
+    CREATE_TRIP: "CreateTrip",
     THANKYOU: "Thankyou",
+   
   },
 };
 

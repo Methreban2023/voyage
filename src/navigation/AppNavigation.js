@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ROUTES from "./routes";
 import ProfileNavigation from "./ProfileNavigation";
 import UserContext from "../context/UserContext";
-import TripCard from "../screens/TripCard";
+
 import AuthNavigation from "./AuthNavigation";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../utils/colors/colors";
@@ -11,6 +11,7 @@ import { View, Text } from "react-native";
 import HomeNavigation from "./HomeNavigation";
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
+import CreateTrip from "../screens/CreateTrip";
 const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
@@ -45,8 +46,8 @@ const AppNavigation = () => {
       />
       {user ? (
         <Tab.Screen
-          name={ROUTES.APPROUTES.CARD}
-          component={TripCard}
+          name={ROUTES.APPROUTES.CREATE_TRIP}
+          component={CreateTrip}
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return (
