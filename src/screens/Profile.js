@@ -1,11 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useContext } from "react";
 import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import UserContext from "../context/UserContext";
 import { removeToken } from "../apis/auth/storage";
-
+import { getProfile } from "../apis/";
 const Profile = ({ navigation }) => {
-  const { setUser } = useContext(UserContext);
+  const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
+  const { data: dataProfile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
   const pressHandler = () => {
     setUser(false);
     removeToken();
@@ -21,6 +27,7 @@ const Profile = ({ navigation }) => {
       >
         Sign Out
       </Button>
+      <View>{Profile}</View>
     </View>
   );
 };

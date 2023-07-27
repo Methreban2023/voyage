@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { TouchableOpacity } from "react-native-web";
 
-const TripCard = () => {
+const TripCard = ({ trip }) => {
   return (
-    <View>
-      <Text>TripCard</Text>
-    </View>
+    <TouchableOpacity style={styles.tripCard}>
+      <Text style={{ flex: 1, alignItems: "center" }}>{trip.title}</Text>
+      <Image source={trip.image} style={{ hieght: 228, width: "100%" }} />
+      <Text style={{ flex: 1, alignItems: "center" }}>{trip.description}</Text>
+      <View>{styles.tripInfo}</View>
+    </TouchableOpacity>
   );
 };
 
