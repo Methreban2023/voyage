@@ -5,32 +5,10 @@ import { StatusBar, SafeAreaView, StyleSheet, Platform } from "react-native";
 import { useEffect, useState } from "react";
 import UserContext from "./src/context/UserContext";
 import { getToken } from "./src/apis/auth/storage";
-// import * as SplashScreen from "expo-splash-screen";
+
 import AppNavigation from "./src/navigation/AppNavigation";
-// import { useFonts } from "expo-font";
-// import { useCallback } from "react";
 
-// const isAndroid = Platform.OS === "android";
-
-// SplashScreen.preventAutoHideAsync();
 export default function App() {
-  // const [fontsLoaded] = useFonts({
-  //   // black: require("./assets/fonts/Inter-Black.ttf"),
-  //   // bold: require("./assets/fonts/Inter-Bold.ttf"),
-  //   // medium: require("./assets/fonts/Inter-Medium.ttf"),
-  //   // regular: require("./assets/fonts/Inter-Regular.ttf"),
-  //   // semiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
-  // });
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (fontsLoaded) {
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
-
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
-
   const [user, setUser] = useState(false);
 
   const checkToken = async () => {
