@@ -4,6 +4,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../utils/colors/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image } from "react-native";
+import { TextInput } from "react-native-paper";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getProfileById, updateProfile } from "../apis/profile/profile";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
 
 const EditProfile = ({ navigation }, id) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -24,7 +30,7 @@ const EditProfile = ({ navigation }, id) => {
   const { mutate: signupFn, error } = useMutation({
     mutationFn: () => updateProfile({ ...userInfo, image }),
     onSuccess: (data) => {
-      saveToken(data.token);
+      //   saveToken(data.token);
       console.log(` edit profile = ${data}`);
       setUser(true);
       navigation.navigate(ROUTES.APPROUTES.HOME);
