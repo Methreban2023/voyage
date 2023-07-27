@@ -11,10 +11,14 @@ const EditProfile = ({ navigation }, id) => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const { setUser } = useContext(UserContext);
+  const [tripCount, setTripCount] = useState(0);
 
   const { data: userData } = useQuery({
     queryKey: ["user"],
     queryFn: () => getProfileById(id),
+    onSuccess: (data) => {
+      setTripCount(data.trips.length);
+    },
   });
 
   const { mutate: signupFn, error } = useMutation({
@@ -38,22 +42,8 @@ const EditProfile = ({ navigation }, id) => {
       quality: 1,
     });
     console.log(result);
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
-
-  const handleImageSelection = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    console.log(result);
     if (!(await result.canceled)) {
-      //add default image here
-      setSelectedImage(result.uri);
+      setSelectedImage(result.assets[0].uri);
     }
   };
   return (
@@ -87,13 +77,6 @@ const EditProfile = ({ navigation }, id) => {
               borderColor: colors.orange,
             }}
           />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, username: value });
-            }}
-            placeholder="Username"
-          />
 
           <TextInput
             style={styles.input}
@@ -111,14 +94,15 @@ const EditProfile = ({ navigation }, id) => {
           />
           <TextInput
             style={styles.input}
-            secureTextEntry
-            autoCapitalize="none"
             onChangeText={(value) => {
-              setUserInfo({ ...userInfo, password: value });
+              setUserInfo({ ...userInfo, bio: value });
             }}
-            // onChangeText={passwordChangeHandler}
-            placeholder="password"
+            placeholder="Bio"
           />
+          <Text style={styles.input} placeholder="Bio">
+            Number of Trips = {tripCount}
+          </Text>
+
           {/* <MaterialIcons name="keyboard-arrow-left" size={24} color="black" /> */}
         </TouchableOpacity>
       </View>

@@ -24,16 +24,19 @@ const TripList = ({ handleAddTrip }) => {
 
   if (trips?.length == 0)
     return (
-      <ScrollView contentContainerStyle={{ padding: 5, gap: 5 }}>
-        <View style={{ width: 150 }}>
-          <TripCard
-            title="Empty"
-            image={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsbbfdOYmsxB3yf6a1YbC8auRHG7o9Ta4xw&usqp=CAU"
-            }
-          />
-        </View>
-      </ScrollView>
+      <>
+        <FilterList />
+        <ScrollView contentContainerStyle={{ padding: 5, gap: 5 }}>
+          <View style={{ width: 150 }}>
+            <TripCard
+              title="Empty"
+              image={
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpsbbfdOYmsxB3yf6a1YbC8auRHG7o9Ta4xw&usqp=CAU"
+              }
+            />
+          </View>
+        </ScrollView>
+      </>
     );
 
   return (
