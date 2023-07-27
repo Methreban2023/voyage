@@ -21,7 +21,7 @@ const TripList = ({ handleAddTrip }) => {
     queryKey: ["trips"],
     queryFn: () => getAllTrips(),
   });
-  // console.log(trips);
+
   if (trips?.length == 0)
     return (
       <ScrollView contentContainerStyle={{ padding: 5, gap: 5 }}>

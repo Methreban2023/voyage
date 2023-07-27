@@ -24,11 +24,9 @@ const SignIn = ({ navigation }) => {
     isLoading,
   } = useMutation({
     mutationFn: () => {
-      console.log("calling sign in in mutation");
       return signIn(userInfo);
     },
     onSuccess: (data) => {
-      console.log("it should work ", data.token);
       saveToken(data.token);
       setUser(true);
       navigation.navigate(ROUTES.APPROUTES.HOME);
@@ -44,7 +42,7 @@ const SignIn = ({ navigation }) => {
           source={require("../media/blackLogo.png")}
           style={styles.image}
         />
-        <View style={[styles.entery, { flex: 1 }]}>
+        <View style={[styles.entery, { flex: 0.8 }]}>
           <Text style={styles.text}>Username</Text>
           <TextInput
             style={styles.input}

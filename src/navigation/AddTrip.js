@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const ProfileNavigation = () => {
   return (
     <Stack.Navigator
-      headerMode="screen"
+      // headerMode="screen"
       screenOptions={{ headerTitle: "Test", headerShown: false }}
     >
       <Stack.Screen name={ROUTES.APPROUTES.CARD} component={TripCard} />

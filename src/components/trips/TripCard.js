@@ -9,8 +9,6 @@ import React from "react";
 import { BASE_URL } from "../../apis/";
 
 const TripCard = ({ title, image, onPress = () => {} }) => {
-  console.log("THIS IS THE IMAGE", image);
-  // console.log(image.includes("media") ? `${BASE_URL}/${image}` : image);
   return (
     <TouchableHighlight
       onPress={() => onPress(title)}
@@ -22,7 +20,7 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
           width: "100%",
           height: "100%",
 
-          borderRadius: 17,
+          // borderRadius: 17,
           overflow: "hidden",
           justifyContent: "center",
           alignItems: "center",
@@ -35,6 +33,7 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
           width="100%"
           height="100%"
         />
+
         <View
           style={{
             flex: 1,
@@ -63,7 +62,7 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
             fontSize: 20,
           }}
         >
-          {description}
+          {/* {description} */}
         </Text>
       </View>
     </TouchableHighlight>
