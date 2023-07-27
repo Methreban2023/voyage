@@ -78,6 +78,8 @@ import {
   View,
   Button,
   Image,
+  FlatList,
+  RefreshControl,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -92,10 +94,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../apis/profile/profile";
 import { removeToken } from "../apis/auth/storage";
+import TripCard from "../components/trips/TripCard";
+import { BASE_URL } from "../apis";
 const Profile = () => {
   const { user, setUser } = useContext(UserContext);
   const navigation = useNavigation();
-  const { data: dataProfile } = useQuery({
+  const {
+    data: dataProfile,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(),
   });
@@ -103,7 +111,7 @@ const Profile = () => {
     removeToken();
     setUser(false);
   };
-  console.log(dataProfile);
+  console.log(`${BASE_URL}/${dataProfile?.image}`);
   return (
     <SafeAreaView
       style={{
@@ -125,7 +133,7 @@ const Profile = () => {
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Image
-          source={dataProfile?.image}
+          source={{ uri: `${BASE_URL}/${dataProfile?.image}` }}
           resizeMode="contain"
           style={{
             height: 155,
@@ -189,6 +197,37 @@ const Profile = () => {
               Edit Profile
             </Text>
           </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            height: 250,
+          }}
+        >
+          <>
+            <FlatList
+              data={dataProfile?.trips}
+              numColumns={2}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    flex: 1,
+                    width: 100,
+                    height: 200,
+                  }}
+                >
+                  <TripCard title={item.title} image={item.image} />
+                </View>
+              )}
+              refreshControl={
+                <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+              }
+              contentContainerStyle={{
+                backgroundColor: "red",
+              }}
+            />
+          </>
         </View>
         <Button
           title="SignOut"
