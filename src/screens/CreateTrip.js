@@ -49,6 +49,7 @@ const queryClient = useQueryClient()
       description:tripInfo.description, 
       image:image,
       tripDate:date, 
+      country:selectedCountry,
 
     }), 
     onSuccess:()=>{
@@ -71,9 +72,9 @@ const queryClient = useQueryClient()
     showMode('date');
   };
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
+  // const showTimepicker = () => {
+  //   showMode('time');
+  // };
 
   const showCountrypicker = () => {
     showMode('Country');
@@ -152,34 +153,16 @@ console.log(tripInfo)
       )}
     </>
  <>
- {/* <Button title="Choose Counrty"
-        onPress={() => {
 
-        }}
-       />
- <View style={styles.countryStyle}>
-      <CountryPicker
-        withFilter
-        withFlag
-        withCountryNameButton
-        withAlphaFilter
-        onSelect={handleCountrySelect}
-      />
-      {selectedCountry && (
-        <Text style={styles.selectedCountryText}>Selected Country: {selectedCountry}</Text>
-      )}
-   
-  </View> */}
   
     </>
  <Text style={styles.text}>Trip Date</Text>
   <>
   <Button onPress={showDatepicker} title="Show date picker!" />
-      <Button onPress={showTimepicker} title="Show time picker!" />
-      <Text>selected: {date.toLocaleString()}</Text>
+    
       {show && (
         <DateTimePicker
-          testID="dateTimePicker"
+          testID="datePicker"
           value={date}
           mode={mode}
           is24Hour={true}
@@ -206,7 +189,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#000000",
+    backgroundColor: "white",
   },
   input: {
     height: 40,
@@ -245,7 +228,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 20,
+      padding: 10,
     },
     selectedCountryText: {
       fontSize: 18,
