@@ -123,9 +123,7 @@ const SignUp = ({ navigation }) => {
       <Button
         title="Sign Up"
         onPress={() => {
-          console.log("CLICKING SIGN UP");
           signupFn();
-          console.log("AFTER UP");
         }}
       />
     </View>

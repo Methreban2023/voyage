@@ -1,7 +1,6 @@
 import instance from "../index";
 
 const signIn = async (userInfo) => {
-  console.log("Calling signin api");
   const res = await instance.post("/users/auth/signin", userInfo);
 
   console.log(res.data);
