@@ -29,7 +29,7 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
       >
         <Image
           source={{
-            uri: image,
+            uri: '${BASE_URL}/${image}',
           }}
           width="100%"
           height="100%"
