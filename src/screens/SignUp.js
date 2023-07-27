@@ -7,24 +7,29 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "../apis/auth/auth";
 import { colors } from "../utils/colors/colors";
 import { saveToken } from "../apis/auth/storage";
+import UserContext from "../context/UserContext";
+
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({});
   const [image, setImage] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const { setUser } = useContext(UserContext);
+  console.log(` signup page`);
 
   const { mutate: signupFn, error } = useMutation({
     mutationFn: () => signUp({ ...userInfo, image }),
     onSuccess: (data) => {
       saveToken(data.token);
-      console.log(data);
-      // navigation.navigate(ROUTES.AUTHROUTES.)}
+      console.log(` signup = ${data}`);
+      setUser(true);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
@@ -60,7 +65,7 @@ const SignUp = ({ navigation }) => {
   //   setPassword(value);
   //   setPasswordError(validatePassword(value));
   // };
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <View style={styles.container}>
       <Pressable onPress={pickImage}>
@@ -73,6 +78,16 @@ const SignUp = ({ navigation }) => {
           )}
         </View>
       </Pressable>
+
+      <Text style={styles.text}>Username</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={(value) => {
+          setUserInfo({ ...userInfo, username: value });
+        }}
+        placeholder="Username"
+      />
+
       <Text style={styles.text}>First Name</Text>
       <TextInput
         style={styles.input}
@@ -89,16 +104,6 @@ const SignUp = ({ navigation }) => {
           setUserInfo({ ...userInfo, lastName: value });
         }}
         placeholder="Last Name"
-      />
-
-      <Text style={styles.text}>Email</Text>
-      <TextInput
-        style={styles.input}
-        autoCapitalize="none"
-        onChangeText={(value) => {
-          setUserInfo({ ...userInfo, email: value });
-        }}
-        placeholder="email"
       />
 
       <Text style={styles.text}>Password</Text>

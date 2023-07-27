@@ -1,18 +1,40 @@
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthNavigation from "./src/navigation/AuthNavigation";
 import { StatusBar, SafeAreaView, StyleSheet, Platform } from "react-native";
-import AppNavigation from "./src/navigation/AppNavigation";
-// import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import UserContext from "./src/context/UserContext";
 import { getToken } from "./src/apis/auth/storage";
-const isAndroid = Platform.OS === "android";
+// import * as SplashScreen from "expo-splash-screen";
+import AppNavigation from "./src/navigation/AppNavigation";
+// import { useFonts } from "expo-font";
+// import { useCallback } from "react";
+
+// const isAndroid = Platform.OS === "android";
+
+// SplashScreen.preventAutoHideAsync();
 export default function App() {
+  // const [fontsLoaded] = useFonts({
+  //   // black: require("./assets/fonts/Inter-Black.ttf"),
+  //   // bold: require("./assets/fonts/Inter-Bold.ttf"),
+  //   // medium: require("./assets/fonts/Inter-Medium.ttf"),
+  //   // regular: require("./assets/fonts/Inter-Regular.ttf"),
+  //   // semiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
+  // });
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
+
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
+
   const [user, setUser] = useState(false);
 
-  const checkToken = () => {
-    const token = getToken();
+  const checkToken = async () => {
+    const token = await getToken();
     if (token) {
       setUser(true);
     }

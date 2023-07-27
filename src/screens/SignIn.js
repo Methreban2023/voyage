@@ -10,7 +10,7 @@ import { TextInput } from "react-native-paper";
 import React, { useContext, useState } from "react";
 import { colors } from "../utils/colors/colors";
 import { signIn } from "../apis/auth/auth";
-import ROUTES from "../navigation";
+import ROUTES from "../navigation/routes";
 import { useMutation } from "@tanstack/react-query";
 import UserContext from "../context/UserContext";
 import { saveToken } from "../apis/auth/storage";
@@ -23,10 +23,13 @@ const SignIn = ({ navigation }) => {
     error,
     isLoading,
   } = useMutation({
-    mutationFn: () => signIn(userInfo),
+    mutationFn: () => {
+      return signIn(userInfo);
+    },
     onSuccess: (data) => {
       saveToken(data.token);
       setUser(true);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
@@ -39,7 +42,7 @@ const SignIn = ({ navigation }) => {
           source={require("../media/blackLogo.png")}
           style={styles.image}
         />
-        <View style={styles.entery}>
+        <View style={[styles.entery, { flex: 0.8 }]}>
           <Text style={styles.text}>Username</Text>
           <TextInput
             style={styles.input}
@@ -62,6 +65,7 @@ const SignIn = ({ navigation }) => {
           <Button
             title="SignIn"
             onPress={() => {
+              console.log("calling sign in");
               signinFn();
             }}
           />
@@ -87,7 +91,7 @@ const SignIn = ({ navigation }) => {
             height: "100%",
             width: "100%",
             position: "absolute",
-            backgroundColor: "#00000090",
+            backgroundColor: colors.black,
             zIndex: 1,
             justifyContent: "center",
             alignItems: "center",
@@ -134,6 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
   },
   image: {
     width: 350,

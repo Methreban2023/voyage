@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { BASE_URL } from "../../apis/";
+import { deleteTrip, updateTrip } from "../../apis/trips";
 
 const TripCard = ({ title, image, onPress = () => {} }) => {
   return (
@@ -20,7 +21,7 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
           width: "100%",
           height: "100%",
 
-          // borderRadius: 17,
+          borderRadius: 17,
           overflow: "hidden",
           justifyContent: "center",
           alignItems: "center",
@@ -28,12 +29,11 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
       >
         <Image
           source={{
-            uri: `${BASE_URL}/${image}`,
+            uri: image,
           }}
           width="100%"
           height="100%"
         />
-
         <View
           style={{
             flex: 1,
@@ -54,16 +54,18 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
         >
           {title}
         </Text>
-        <Text
-          style={{
-            color: "white",
-            zIndex: 2,
-            position: "absolute",
-            fontSize: 20,
+        <Button
+          title="Update"
+          onPress={() => {
+            updateTrip();
           }}
-        >
-          {/* {description} */}
-        </Text>
+        />
+        <Button
+          title="Delete"
+          onPress={() => {
+            deleteTrip();
+          }}
+        />
       </View>
     </TouchableHighlight>
   );
