@@ -11,8 +11,9 @@ import FilterList from "../filter/FilterList";
 import TripCard from "../trips/TripCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
-
+import { useState } from "react";
 const TripList = ({ handleAddTrip }) => {
+  const [query, setQuery] = useState("");
   const {
     data: trips,
     isFetching,
@@ -25,7 +26,7 @@ const TripList = ({ handleAddTrip }) => {
   if (trips?.length == 0)
     return (
       <>
-        <FilterList />
+        <FilterList setQuery={setQuery} />
         <ScrollView contentContainerStyle={{ padding: 5, gap: 5 }}>
           <View style={{ width: 150 }}>
             <TripCard
@@ -41,9 +42,14 @@ const TripList = ({ handleAddTrip }) => {
 
   return (
     <>
-      <FilterList />
+      <FilterList setQuery={setQuery} />
       <FlatList
-        data={trips}
+        data={trips?.filter((trip) => {
+          if (trip.title.toLowerCase().includes(query.toLowerCase())) {
+            console.log(trip);
+            return true;
+          } else return false;
+        })}
         numColumns={2}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (

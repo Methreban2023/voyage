@@ -9,15 +9,12 @@ import { colors } from "../../utils/colors/colors";
 import { useState } from "react";
 import React from "react";
 import { Searchbar } from "react-native-paper";
-const FilterList = ({ list = [], onPress = () => {} }) => {
-  const [searchQuery, setSearchQuery] = useState(list);
-
+const FilterList = ({ list = [], onPress = () => {}, setQuery }) => {
   return (
     <View>
       <Searchbar
         placeholder="Search"
-        onChangeText={(query) => setSearchQuery(query)}
-        value={searchQuery}
+        onChangeText={(query) => setQuery(query)}
       />
       <ScrollView
         contentContainerStyle={{ padding: 5, height: "100%", gap: 5 }}
