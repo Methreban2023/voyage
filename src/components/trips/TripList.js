@@ -7,7 +7,7 @@ import {
   RefreshControl,
 } from "react-native";
 import React from "react";
-
+import FilterList from "../filter/FilterList";
 import TripCard from "../trips/TripCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
@@ -37,29 +37,32 @@ const TripList = ({ handleAddTrip }) => {
     );
 
   return (
-    <FlatList
-      data={trips}
-      numColumns={2}
-      keyExtractor={(item) => item._id}
-      renderItem={({ item }) => (
-        <View
-          style={{
-            flex: 1,
-            width: 100,
-            height: 200,
-          }}
-        >
-          <TripCard title={item.title} image={item.image} />
-        </View>
-      )}
-      refreshControl={
-        <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-      }
-      contentContainerStyle={{
-        backgroundColor: "red",
-      }}
-    />
-    // <ScrollView
+    <>
+      <FilterList />
+      <FlatList
+        data={trips}
+        numColumns={2}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              flex: 1,
+              width: 100,
+              height: 200,
+            }}
+          >
+            <TripCard title={item.title} image={item.image} />
+          </View>
+        )}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={refetch} />
+        }
+        contentContainerStyle={{
+          backgroundColor: "red",
+        }}
+      />
+    </>
+    // ScrollView
     //   refreshControl={
     //     <RefreshControl refreshing={isFetching} onRefresh={refetch} />
     //   }

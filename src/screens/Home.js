@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import TripList from "../components/trips/TripList";
 import FilterList from "../components/filter/FilterList";
-
+import { Searchbar } from "react-native-paper";
 const Home = ({ navigation }) => {
   const [selectedTrips, setSelectedTrips] = useState([]);
   const handleAddTrip = (title) => {
@@ -17,8 +17,8 @@ const Home = ({ navigation }) => {
     setSelectedTrips(selectedTrips.filter((trip) => trip != title));
   };
   return (
-    <View style={{ flex: 1, backgroundColor: "yellow" }}>
-      <View style={{ flex: 1, backgroundColor: "blue" }}>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <TripList handleAddTrip={handleAddTrip} />
       </View>
 
