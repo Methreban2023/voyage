@@ -16,14 +16,15 @@ const createTrip = async (data) => {
   for (const key in data) {
     if (key != "image") {
       formData.append(key, data[key]);
+    }else{
+      formData.append("image", {
+        name: data.image,
+        type: "image/jpeg",
+        uri: data.image,
+      });
     }
   }
 
-  formData.append("image", {
-    name: data.image,
-    type: "image/jpeg",
-    uri: data.image,
-  });
 
   const res = await instance.post("/trip", formData);
   return res.data;
