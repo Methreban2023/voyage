@@ -15,11 +15,13 @@ const ProfileNavigation = () => {
         name={ROUTES.APPROUTES.PROFILE}
         component={Profile}
         options={{ headerShown: false }}
+        screenOptions={{ headerShown: false }}
       />
       <Stack.Screen
         name={ROUTES.APPROUTES.EDITPROFILE}
         component={EditProfile}
         options={{ headerShown: false }}
+        screenOptions={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
