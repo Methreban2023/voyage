@@ -13,8 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
 import { useState } from "react";
 import ROUTES from "../../navigation/routes";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const TripList = ({ handleAddTrip }) => {
   const [query, setQuery] = useState("");
+
   const {
     data: trips,
     isFetching,
@@ -40,7 +42,9 @@ const TripList = ({ handleAddTrip }) => {
         </ScrollView>
       </>
     );
-
+  const handledescription = () => {
+    navigation.navigate(ROUTES.TRIP_DETAILS, { trip: item });
+  };
   return (
     <>
       <FilterList setQuery={setQuery} />
@@ -65,9 +69,8 @@ const TripList = ({ handleAddTrip }) => {
               title={item.title}
               image={item.image}
               description={item.description}
-              onPress={() => {
-                navigation.navigate(ROUTES.APPROUTES.TRIPDETAILS);
-              }}
+              createdBy={item.createdBy}
+              onPress={() => {}}
             />
           </View>
         )}
