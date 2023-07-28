@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import ROUTES from "./routes";
 
-const TripNavigation = () => {
+const TripDetailNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerTitle: "Test", headerShown: false }}
@@ -16,6 +16,6 @@ const TripNavigation = () => {
   );
 };
 
-export default TripNavigation;
+export default TripDetailNavigation;
 
 const styles = StyleSheet.create({});

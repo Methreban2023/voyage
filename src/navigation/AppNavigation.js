@@ -30,7 +30,7 @@ const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
   const { setUser, user } = useContext(UserContext);
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <Tab.Screen
         name={ROUTES.APPROUTES.HOME_NAV}
         component={HomeNavigation}
@@ -39,7 +39,8 @@ const AppNavigation = () => {
             <AntDesign
               name="home"
               size={24}
-              color={focused ? colors.orange : colors.light_blue}
+              color={focused ? colors.white : colors.light_blue}
+              backgroundColor={focused ? colors.orange : colors.white}
             />
           ),
         }}
@@ -65,7 +66,6 @@ const AppNavigation = () => {
                     bottom: 30,
                   }}
                 >
-                  <Fontisto name="plus-a" size={24} color={colors.white} />
                   <View
                     style={{
                       position: "absolute",
@@ -97,7 +97,8 @@ const AppNavigation = () => {
               <AntDesign
                 name="user"
                 size={24}
-                color={focused ? colors.orange : colors.light_blue}
+                color={focused ? colors.white : colors.light_blue}
+                backgroundColor={focused ? colors.orange : colors.white}
               />
             ),
           }}
@@ -111,7 +112,8 @@ const AppNavigation = () => {
               <AntDesign
                 name="adduser"
                 size={24}
-                color={focused ? colors.orange : colors.light_blue}
+                color={focused ? colors.white : colors.light_blue}
+                backgroundColor={focused ? colors.orange : colors.white}
               />
             ),
           }}
