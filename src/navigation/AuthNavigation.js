@@ -9,7 +9,6 @@ const Stack = createStackNavigator();
 const AuthNavigation = () => {
   return (
     <Stack.Navigator
-      // headerMode="screen"
       screenOptions={{ headerTitle: "Test", headerShown: false }}
     >
       <Stack.Screen name={ROUTES.AUTHROUTES.SIGNIN} component={SignIn} />
