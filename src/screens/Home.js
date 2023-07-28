@@ -21,18 +21,6 @@ const Home = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <TripList handleAddTrip={handleAddTrip} />
       </View>
-
-      {/* {selectedTrips.length != 0 ? (
-        <View>
-          <View style={{ flex: 0.08 }}>
-            <FilterList list={selectedTrips} onPress={removeFromTrips} />
-          </View>
-
-          <View style={{ flex: 0.77 }}></View>
-        </View>
-      ) : (
-        <View style={{ flex: 0.85 }}></View>
-      )} */}
     </View>
   );
 };

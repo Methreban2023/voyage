@@ -1,39 +1,29 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../utils/colors/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image } from "react-native";
 import { TextInput } from "react-native-paper";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getProfileById, updateProfile } from "../apis/profile/profile";
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
+import { useMutation } from "@tanstack/react-query";
+import { BASE_URL } from "../apis";
+import { updateProfile } from "../apis/profile/profile";
+import { ImagePicker } from "expo-image-picker";
 
-const EditProfile = ({ navigation }, id) => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [userInfo, setUserInfo] = useState({});
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const { setUser } = useContext(UserContext);
+import { Button } from "react-native-paper";
+const EditProfile = ({ navigation }, userInfo, setUserInfo, user, setUser) => {
+  const [selectedImage, setSelectedImage] = useState(userInfo.image);
+
   const [tripCount, setTripCount] = useState(0);
 
-  const { data: userData } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => getProfileById(id),
+  console.log(userInfo);
+  const { mutate: updateFn, error } = useMutation({
+    mutationFn: () => updateProfile({ ...userInfo, selectedImage }),
     onSuccess: (data) => {
-      setTripCount(data.trips.length);
-    },
-  });
-
-  const { mutate: signupFn, error } = useMutation({
-    mutationFn: () => updateProfile({ ...userInfo, image }),
-    onSuccess: (data) => {
-      //   saveToken(data.token);
       console.log(` edit profile = ${data}`);
-      setUser(true);
-      navigation.navigate(ROUTES.APPROUTES.HOME);
+      setUserInfo(...userInfo);
+      // navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
@@ -54,7 +44,12 @@ const EditProfile = ({ navigation }, id) => {
   };
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: colors.white, paddingHorizontal: 22 }}
+      style={{
+        flex: 1,
+
+        backgroundColor: colors.orange,
+        paddingHorizontal: 22,
+      }}
     >
       <View
         style={{
@@ -73,45 +68,64 @@ const EditProfile = ({ navigation }, id) => {
             size={24}
             color={colors.black}
           />
-          <Image
-            source={{ uri: selectedImage }}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 85,
-              borderWidth: 2,
-              borderColor: colors.orange,
-            }}
-          />
-
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, firstName: value });
-            }}
-            placeholder="First Name"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, lastName: value });
-            }}
-            placeholder="Last Name"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUserInfo({ ...userInfo, bio: value });
-            }}
-            placeholder="Bio"
-          />
-          <Text style={styles.input} placeholder="Bio">
-            Number of Trips = {tripCount}
-          </Text>
-
-          {/* <MaterialIcons name="keyboard-arrow-left" size={24} color="black" /> */}
         </TouchableOpacity>
       </View>
+      <View>
+        <TouchableOpacity onPress={pickImage}>
+          <View style={styles.avatar_image}>
+            <Image
+              // source={{ uri: `${BASE_URL}/${selectedImage?.image}` }}
+              source={{ uri: selectedImage }}
+              style={{
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+                borderWidth: 4,
+                borderColor: colors.black,
+              }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 10,
+                zIndex: 9999,
+              }}
+            >
+              <MaterialIcons
+                name="photo-camera"
+                size={32}
+                color={colors.baby_blue}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => {
+            setUserInfo({ ...userInfo, firstName: value });
+          }}
+          placeholder="First Name"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => {
+            setUserInfo({ ...userInfo, lastName: value });
+          }}
+          placeholder="Last Name"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => {
+            setUserInfo({ ...userInfo, bio: value });
+          }}
+          placeholder="Bio"
+        />
+        <Text style={styles.input} placeholder="Bio">
+          Number of Trips = {tripCount}
+        </Text>
+      </View>
+
       <View>
         <View
           style={{
@@ -133,10 +147,40 @@ const EditProfile = ({ navigation }, id) => {
           ></View>
         </View>
       </View>
+      <TouchableOpacity
+        onPress={() => {
+          updateFn();
+        }}
+        style={{
+          backgroundColor: colors.primary,
+          height: 44,
+          borderRadius: 6,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          style={{
+            color: colors.white,
+          }}
+        >
+          Save Change
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 export default EditProfile;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  avatar_image: {
+    width: 200,
+    height: 200,
+    backgroundColor: "grey",
+    borderRadius: 100,
+    overflow: "hidden",
+    alignSelf: "center",
+    marginVertical: 20,
+  },
+});
