@@ -56,20 +56,29 @@ const AppNavigation = () => {
                     alignItem: "center",
                     justifyContent: "center",
                     backgroundColor: colors.white,
-                    height: Platform.OS == "ios" ? 50 : 60,
-                    width: Platform.OS == "ios" ? 50 : 60,
+                    height: Platform.OS == "ios" ? 50 : 50,
+                    width: Platform.OS == "ios" ? 50 : 50,
                     top: Platform.OS == "ios" ? -10 : -20,
-                    borderRadius: Platform.OS == "ios" ? 25 : 30,
+                    borderRadius: Platform.OS == "ios" ? 50 : 50,
                     borderWidth: 2,
-                    borderColor: colors.white,
+                    // borderColor: colors.white,
+                    bottom: 30,
                   }}
                 >
                   <Fontisto name="plus-a" size={24} color={colors.white} />
-                  <AntDesign
-                    name="pluscircle"
-                    size={24}
-                    color={focused ? colors.orange : colors.light_blue}
-                  />
+                  <View
+                    style={{
+                      position: "absolute",
+                      alignItem: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AntDesign
+                      name="pluscircle"
+                      size={50}
+                      color={focused ? colors.orange : colors.light_blue}
+                    />
+                  </View>
                 </View>
               );
             },

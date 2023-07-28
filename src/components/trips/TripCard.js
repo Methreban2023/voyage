@@ -11,7 +11,7 @@ import { BASE_URL } from "../../apis/";
 const TripCard = ({ title, image, onPress = () => {} }) => {
   return (
     <TouchableHighlight
-      onPress={() => onPress(title)}
+      onPress={() => onPress(onPress)}
       style={{ flex: 1, width: "100%", height: "100%", borderRadius: 17 }}
     >
       <View

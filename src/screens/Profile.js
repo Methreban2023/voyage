@@ -37,6 +37,7 @@ const Profile = () => {
       setUserInfo(data);
     },
   });
+  // console.log(` this is a profile infor = ${userInfo.firstName}`);
   const pressHandler = () => {
     removeToken();
     setUser(false);
@@ -107,10 +108,8 @@ const Profile = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(ROUTES.APPROUTES.EDITPROFILE, {
-                userInfo,
-                setUserInfo,
-                user,
-                setUser,
+                userInfo: userInfo,
+                setUserInfo: setUserInfo,
               });
             }}
             style={{
