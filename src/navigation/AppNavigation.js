@@ -56,12 +56,12 @@ const AppNavigation = () => {
                     alignItem: "center",
                     justifyContent: "center",
                     backgroundColor: colors.white,
-                    height: Platform.OS == "ios" ? 50 : 50,
-                    width: Platform.OS == "ios" ? 50 : 50,
+                    height: Platform.OS == "ios" ? 60 : 70,
+                    width: Platform.OS == "ios" ? 60 : 70,
                     top: Platform.OS == "ios" ? -10 : -20,
                     borderRadius: Platform.OS == "ios" ? 50 : 50,
                     borderWidth: 2,
-                    // borderColor: colors.white,
+                    borderColor: colors.white,
                     bottom: 30,
                   }}
                 >
@@ -69,8 +69,11 @@ const AppNavigation = () => {
                   <View
                     style={{
                       position: "absolute",
+                      width: 65,
+                      left: 3,
                       alignItem: "center",
                       justifyContent: "center",
+                      borderColor: colors.white,
                     }}
                   >
                     <AntDesign

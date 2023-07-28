@@ -76,8 +76,8 @@ const EditProfile = ({ route }) => {
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.avatar_image}>
             <Image
-              source={{ uri: `${BASE_URL}/${userInfo.image}` }}
-              // source={{ uri: selectedImage }}
+              // source={{ uri: `${BASE_URL}/${userInfo.image}` }}
+              source={{ uri: userInfo.image }}
               style={{
                 width: 200,
                 height: 200,
@@ -135,7 +135,6 @@ const EditProfile = ({ route }) => {
             marginBottom: 6,
           }}
         >
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>Name</Text>
           <View
             style={{
               height: 44,
