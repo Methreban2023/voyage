@@ -34,7 +34,7 @@ const Profile = () => {
     queryKey: ["profile"],
     queryFn: () => getProfile(),
     onSuccess: (data) => {
-      setUserInfo(dataProfile);
+      setUserInfo(data);
     },
   });
   const pressHandler = () => {
