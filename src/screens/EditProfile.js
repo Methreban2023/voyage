@@ -10,14 +10,15 @@ import { useMutation } from "@tanstack/react-query";
 import { BASE_URL } from "../apis";
 import { updateProfile } from "../apis/profile/profile";
 import { ImagePicker } from "expo-image-picker";
+import { useNavigation } from "@react-navigation/native";
 
-import { Button } from "react-native-paper";
-const EditProfile = ({ navigation }, userInfo, setUserInfo, user, setUser) => {
-  const [selectedImage, setSelectedImage] = useState(userInfo.image);
+const EditProfile = ({ route }) => {
+  const navigation = useNavigation();
+  const { userInfo, setUserInfo } = route.params;
+  // const [selectedImage, setSelectedImage] = useState(userInfo.image);
+  // const [userInfo, setUserInfo] = useState({});
+  // const [tripCount, setTripCount] = useState(0);
 
-  const [tripCount, setTripCount] = useState(0);
-
-  console.log(userInfo);
   const { mutate: updateFn, error } = useMutation({
     mutationFn: () => updateProfile({ ...userInfo, selectedImage }),
     onSuccess: (data) => {
@@ -39,9 +40,10 @@ const EditProfile = ({ navigation }, userInfo, setUserInfo, user, setUser) => {
     });
     console.log(result);
     if (!(await result.canceled)) {
-      setSelectedImage(result.assets[0].uri);
+      setUserInfo({ ...userInfo, image: result.assets[0].uri });
     }
   };
+
   return (
     <SafeAreaView
       style={{
@@ -74,8 +76,8 @@ const EditProfile = ({ navigation }, userInfo, setUserInfo, user, setUser) => {
         <TouchableOpacity onPress={pickImage}>
           <View style={styles.avatar_image}>
             <Image
-              // source={{ uri: `${BASE_URL}/${selectedImage?.image}` }}
-              source={{ uri: selectedImage }}
+              source={{ uri: `${BASE_URL}/${userInfo.image}` }}
+              // source={{ uri: selectedImage }}
               style={{
                 width: 200,
                 height: 200,
@@ -105,24 +107,24 @@ const EditProfile = ({ navigation }, userInfo, setUserInfo, user, setUser) => {
           onChangeText={(value) => {
             setUserInfo({ ...userInfo, firstName: value });
           }}
-          placeholder="First Name"
+          placeholder={userInfo.firstName}
         />
         <TextInput
           style={styles.input}
           onChangeText={(value) => {
             setUserInfo({ ...userInfo, lastName: value });
           }}
-          placeholder="Last Name"
+          placeholder={userInfo.lastName}
         />
         <TextInput
           style={styles.input}
           onChangeText={(value) => {
             setUserInfo({ ...userInfo, bio: value });
           }}
-          placeholder="Bio"
+          placeholder={userInfo.bio}
         />
-        <Text style={styles.input} placeholder="Bio">
-          Number of Trips = {tripCount}
+        <Text style={styles.input}>
+          Number of Trips = {userInfo.trips.length}
         </Text>
       </View>
 

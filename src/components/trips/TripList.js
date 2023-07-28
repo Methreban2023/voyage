@@ -12,6 +12,7 @@ import TripCard from "../trips/TripCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
 import { useState } from "react";
+import ROUTES from "../../navigation/routes";
 const TripList = ({ handleAddTrip }) => {
   const [query, setQuery] = useState("");
   const {
@@ -60,7 +61,14 @@ const TripList = ({ handleAddTrip }) => {
               height: 200,
             }}
           >
-            <TripCard title={item.title} image={item.image} />
+            <TripCard
+              title={item.title}
+              image={item.image}
+              description={item.description}
+              onPress={() => {
+                navigation.navigate(ROUTES.APPROUTES.TRIPDETAILS);
+              }}
+            />
           </View>
         )}
         refreshControl={
