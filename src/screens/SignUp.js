@@ -60,18 +60,22 @@ const SignUp = ({ navigation }) => {
 
   //   if (!regex.test(password)) {
   //     return setPasswordError(
-  //       "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
+  //       "must be at least 8 characters long and contain one uppercase, one lowercase letter, and one number."
   //     );
   //   }
 
   //   return setPasswordError("");
   // };
   // const passwordChangeHandler = (value) => {
-  //   setUserInfo({ ...userInfo, password: value });
-  //   setPassword(value);
   //   setPasswordError(validatePassword(value));
+
+  //   if (passwordError === "") {
+  //     setPassword(value);
+  //     return setUserInfo({ ...userInfo, password: value });
+  //   }
   // };
-  // console.log(userInfo);
+
+  console.log(userInfo);
   return (
     <View style={styles.container}>
       <Pressable onPress={pickImage}>
@@ -87,6 +91,7 @@ const SignUp = ({ navigation }) => {
 
       <Text style={styles.text}>Username</Text>
       <TextInput
+        // value ={this.state.value}
         style={styles.input}
         onChangeText={(value) => {
           setUserInfo({ ...userInfo, username: value });
@@ -120,16 +125,25 @@ const SignUp = ({ navigation }) => {
         onChangeText={(value) => {
           setUserInfo({ ...userInfo, password: value });
         }}
-        // onChangeText={passwordChangeHandler}
+        // onChangeText={(value) => {
+        //   passwordChangeHandler(value);
+        // }}
         placeholder="password"
       />
-      {/* {passwordError !== "" && (
-          <Text style={{ color: "red" }}>{passwordError}</Text>
-        )} */}
+      {/* <View>
+        <Text style={(styles.text, (backgroundColor = colors.baby_blue))}>
+          {passwordError !== "" && (
+            <Text style={{ color: "red" }}>{passwordError}</Text>
+          )}
+        </Text>
+      </View> */}
+
       <Button
-        title="Sign Up"
+        title="Sign Me Up"
         onPress={() => {
+          // if (passwordError === "")
           signupFn();
+          // console.log(passwordError);
         }}
       />
     </View>

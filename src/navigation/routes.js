@@ -14,8 +14,7 @@ const ROUTES = {
     PROFILE: "Profile",
     CREATE_TRIP: "CreateTrip",
     THANKYOU: "Thankyou",
-    // TRIPDETAILS: "TripDetails",
-    TRIPDETAILS_NAV: "TripDetailsNavigation",
+    TRIPDETAILS: "TripDetails",
   },
 };
 

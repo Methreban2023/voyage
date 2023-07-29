@@ -13,10 +13,10 @@ const HomeNavigation = () => {
       screenOptions={{ headerTitle: "Test", headerShown: false }}
     >
       <Stack.Screen name={ROUTES.APPROUTES.HOME} component={Home} />
-      {/* <Stack.Screen
+      <Stack.Screen
         name={ROUTES.APPROUTES.TRIPDETAILS}
         component={TripDetails}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

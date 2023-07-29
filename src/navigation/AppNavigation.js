@@ -35,6 +35,7 @@ const AppNavigation = () => {
         name={ROUTES.APPROUTES.HOME_NAV}
         component={HomeNavigation}
         options={{
+          title: "",
           tabBarIcon: ({ color, size, focused }) => (
             <AntDesign
               name="home"
