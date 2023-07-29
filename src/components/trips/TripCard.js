@@ -25,17 +25,17 @@ const TripCard = ({
   description,
 }) => {
   // const {data:}
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <TouchableHighlight
       style={{ flex: 1 }}
       onPress={() => {
-        // navigation.navigate("TripDetails", {
-        //   createdBy,
-        //   description,
-        //   title,
-        //   image,
-        // });
+        navigation.navigate("TripDetails", {
+          createdBy,
+          description,
+          title,
+          image,
+        });
       }}
     >
       <View style={style.card}>
