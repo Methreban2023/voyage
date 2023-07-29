@@ -19,7 +19,7 @@
 //         .then((response) => {
 //           if (response.data.success) {
 //             setForgotEmail(email);
-//             navigation.navigate("ResetPasswordConfirmation");
+
 //           } else {
 //             setError(
 //               "There was an issue resetting your password, Please try again."
@@ -31,7 +31,7 @@
 //     }
 //   };
 //   const handleBackToLogin = () => {
-//     navigation.navigate("SignIn");
+
 //   };
 //   return (
 //     <>
