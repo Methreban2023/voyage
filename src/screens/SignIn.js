@@ -62,6 +62,28 @@ const SignIn = ({ navigation }) => {
               setUserInfo({ ...userInfo, password: value });
             }}
           />
+
+          <View
+            style={{
+              flex: 0.5,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.AUTHROUTES.FORGOT)}
+            >
+              <Text style={styles.link_text}>Forgot password?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.AUTHROUTES.SIGNUP)}
+            >
+              <Text style={styles.link_text}>SignUp</Text>
+            </TouchableOpacity>
+          </View>
+
           <Button
             title="SignIn"
             onPress={() => {
@@ -69,19 +91,6 @@ const SignIn = ({ navigation }) => {
               signinFn();
             }}
           />
-        </View>
-        <View style={styles.link_position}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.AUTHROUTES.FORGOT)}
-          >
-            <Text style={styles.link_text}>Forgot password?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.AUTHROUTES.SIGNUP)}
-          >
-            <Text style={styles.link_text}>SignUp</Text>
-          </TouchableOpacity>
         </View>
       </View>
       {isLoading && (

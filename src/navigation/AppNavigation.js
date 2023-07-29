@@ -136,9 +136,8 @@ const AppNavigation = () => {
             tabBarIcon: ({ color, size, focused }) => (
               <AntDesign
                 name="adduser"
-                size={24}
-                color={focused ? colors.white : colors.light_blue}
-                backgroundColor={focused ? colors.orange : colors.white}
+                size={focused ? 34 : 24}
+                color={focused ? colors.orange : colors.light_blue}
               />
             ),
           }}
