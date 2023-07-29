@@ -95,7 +95,7 @@ const EditProfile = ({ route }) => {
                 flex: 1,
               }}
             >
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   navigation.navigate(ROUTES.APPROUTES.PROFILE);
                 }}
@@ -118,7 +118,7 @@ const EditProfile = ({ route }) => {
                 >
                   Back to Profile
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <Pressable
@@ -155,21 +155,48 @@ const EditProfile = ({ route }) => {
               </View>
             </Pressable>
             <TextInput
-              style={styles.input}
+              style={{
+                backgroundColor: colors.white,
+                width: "100%",
+                height: 50,
+                borderRadius: 4,
+                borderColor: colors.orange,
+                borderWidth: 1,
+                marginBottom: 6,
+                paddingLeft: 8,
+              }}
               onChangeText={(value) => {
                 setUpdateUserInfo({ ...updateUserInfo, firstName: value });
               }}
               value={updateUserInfo?.firstName}
             />
             <TextInput
-              style={styles.input}
+              style={{
+                backgroundColor: colors.white,
+                width: "100%",
+                height: 50,
+                borderRadius: 4,
+                borderColor: colors.orange,
+                borderWidth: 1,
+                marginBottom: 6,
+                paddingLeft: 8,
+              }}
               onChangeText={(value) => {
                 setUpdateUserInfo({ ...updateUserInfo, lastName: value });
               }}
               value={updateUserInfo.lastName}
             />
             <TextInput
-              style={styles.input}
+              style={{
+                backgroundColor: colors.white,
+                width: "100%",
+                height: 100,
+                borderRadius: 4,
+                borderColor: colors.orange,
+                borderWidth: 1,
+                marginBottom: 6,
+                paddingLeft: 8,
+              }}
               onChangeText={(value) => {
                 setUpdateUserInfo({ ...updateUserInfo, bio: value });
               }}
@@ -259,7 +286,6 @@ const styles = StyleSheet.create({
   },
   input: {
     color: colors.black,
-    fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 18,
   },
 });
