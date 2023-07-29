@@ -25,7 +25,7 @@ const TripList = ({ handleAddTrip }) => {
     queryKey: ["trips"],
     queryFn: () => getAllTrips(),
   });
-
+  console.log("===============>", trips);
   if (trips?.length == 0)
     return (
       <>
@@ -55,6 +55,13 @@ const TripList = ({ handleAddTrip }) => {
             return true;
           } else return false;
         })}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          marginTop: 10,
+          paddingBottom: 50,
+          backgroundColor: "black",
+        }}
         numColumns={2}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
@@ -63,6 +70,7 @@ const TripList = ({ handleAddTrip }) => {
               flex: 1,
               width: 100,
               height: 200,
+              padding: 5,
             }}
           >
             <TripCard
@@ -77,35 +85,8 @@ const TripList = ({ handleAddTrip }) => {
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={refetch} />
         }
-        contentContainerStyle={{
-          backgroundColor: "red",
-        }}
       />
     </>
-    // ScrollView
-    //   refreshControl={
-    //     <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-    //   }
-    //   contentContainerStyle={{
-    //     padding: 5,
-    //     gap: 5,
-
-    //     backgroundColor: "red",
-    //   }}
-    // >
-    //   <Text>Hello</Text>
-
-    //   {trips?.map((trip) => (
-    //     <View style={{ width: 150, height: 150 }} key={trip._id}>
-    //       <TripCard
-    //         title={trip.title}
-    //         image={trip.image}
-    //         // description={trip.description}
-    //         onPress={handleAddTrip}
-    //       />
-    //     </View>
-    //   ))}
-    // </ScrollView>
   );
 };
 

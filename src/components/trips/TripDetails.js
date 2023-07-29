@@ -8,69 +8,140 @@ import {
 import React from "react";
 import { BASE_URL } from "../../apis/";
 import { deleteTrip, updateTrip } from "../../apis/trips";
+import { colors } from "../../utils/colors/colors";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import style from "react-native-datepicker/style";
+const width = dimentions.get("screen").width / 2 - 30;
 
-const TripCard = ({ title, image, onPress = () => {} }) => {
+const TripDetails = ({ navigation, title, image, onPress = () => {} }) => {
   return (
-    <TouchableHighlight
-      onPress={() => onPress(title)}
-      style={{ flex: 1, width: "100%", height: "100%", borderRadius: 17 }}
-    >
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          height: "100%",
+    <View>
+      <TouchableHighlight>
+        <View>
+          <View style={style.card}>
+            {/* add favorite heart icon - if user add to favorite */}
+            <View style={{ alignItems: "flex-end" }}>
+              <View
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: trip.like
+                    ? "rgba(245, 42, 42,0.2)"
+                    : "rgba(0,0,0,0.2) ",
+                }}
+              >
+                <Icon
+                  name="favorite"
+                  size={18}
+                  color={trip.like ? colors.red : colors.black}
+                  onPress={() => navigation.navigate("addToFavorite")}
+                />
+              </View>
+            </View>
+            {/* image of the trip */}
+            <View
+              style={{
+                height: 100,
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={trip.image}
+                style={{ flex: 1, resizeMode: "contain" }}
+              />
 
-          borderRadius: 17,
-          overflow: "hidden",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Image
-          source={{
-            uri: image,
-          }}
-          width="100%"
-          height="100%"
-        />
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            backgroundColor: "#00000070",
-            zIndex: 1,
-          }}
-        ></View>
-        <Text
-          style={{
-            color: "white",
-            zIndex: 2,
-            position: "absolute",
-            fontSize: 20,
-          }}
-        >
-          {title}
-        </Text>
-        <Button
-          title="Update"
-          onPress={() => {
-            updateTrip();
-          }}
-        />
-        <Button
-          title="Delete"
-          onPress={() => {
-            deleteTrip();
-          }}
-        />
-      </View>
-    </TouchableHighlight>
+              {/* Add trip title */}
+              <View style={style.tripTitle}>{trip.title}</View>
+
+              {/* add trip description */}
+              <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
+                <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                  Why it is amazing trip?{" "}
+                </Text>
+                <Text
+                  style={{
+                    color: "grey",
+                    fontSize: 16,
+                    lineHeight: 22,
+                    marginTop: 10,
+                  }}
+                >
+                  {trip.decription}
+                </Text>
+              </View>
+
+              {/* Adding Edit and Delete buttons */}
+              <View
+                style={{
+                  marginTop: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  title="Update Trip"
+                  onPress={() => navigation.navigate("updateTrip")}
+                />
+                <Button
+                  title="Delete Trip"
+                  onPress={() => navigation.navigate("deleteTrip")}
+                />
+              </View>
+
+              <View style={{ alignItems: "flex-end" }}>
+                <Text style={{ fontSize: 18, color: colors.black }}>
+                  Create By: {userInfo.username}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </TouchableHighlight>
+    </View>
   );
 };
+export default TripDetails;
 
-export default TripCard;
+const styles = StyleSheet.create({
+  card: {
+    height: 225,
+    backgroundColor: colors.light,
+    width,
+    marginHorizontal: 2,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 15,
+  },
 
-const styles = StyleSheet.create({});
+  tripTitle: {
+    fontWeight: "bold",
+    fontSize: 17,
+    marginTop: 10,
+  },
+
+  borderBtn: {
+    borderColor: "grey",
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 60,
+    height: 40,
+  },
+  borderBtnText: {
+    fontWeight: "bold",
+    ontSize: 28,
+  },
+
+  buyBtn: {
+    width: 130,
+    height: 50,
+    backgroundColor: colors.green,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+  },
+});

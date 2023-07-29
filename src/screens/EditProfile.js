@@ -48,7 +48,6 @@ const EditProfile = ({ route }) => {
     <SafeAreaView
       style={{
         flex: 1,
-
         backgroundColor: colors.black,
         paddingHorizontal: 22,
       }}
