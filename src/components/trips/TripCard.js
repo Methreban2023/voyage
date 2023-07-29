@@ -1,6 +1,8 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { BASE_URL } from "../../apis/";
+import { useNavigation } from "@react-navigation/native";
+import ROUTES from "../../navigation/routes";
 
 const TripCard = ({
   title,
@@ -9,9 +11,13 @@ const TripCard = ({
   createdBy,
   onPress = () => {},
 }) => {
+  const navigation = useNavigation();
   // const {data:}
   return (
-    <View
+    <Pressable
+      onPress={() => {
+        navigation.navigate(ROUTES.APPROUTES.TRIPDETAILS);
+      }}
       style={{
         flex: 1,
         width: "100%",
@@ -61,7 +67,7 @@ const TripCard = ({
       >
         {/* {description} */}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
