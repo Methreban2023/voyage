@@ -31,7 +31,7 @@ const SignUp = ({ navigation }) => {
       saveToken(data.token);
       console.log(` signup = ${data}`);
       setUser(true);
-      navigation.navigate(ROUTES.APPROUTES.HOME);
+      // navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);

@@ -2,26 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState } from "react";
 import TripList from "../components/trips/TripList";
-import FilterList from "../components/filter/FilterList";
-import { Searchbar } from "react-native-paper";
 import { colors } from "../utils/colors/colors";
-import style from "react-native-datepicker/style";
-import { TextInput } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/MaterialIcons";
-const Home = ({ navigation }) => {
-  const [selectedTrips, setSelectedTrips] = useState([]);
-  const handleAddTrip = (title) => {
-    const isFound = selectedTrips.find((trip) => trip == title);
-    if (isFound) {
-      setSelectedTrips(selectedTrips.filter((trip) => trip != title));
-    } else {
-      setSelectedTrips([...selectedTrips, title]);
-    }
-  };
-  const removeFromTrips = (title) => {
-    setSelectedTrips(selectedTrips.filter((trip) => trip != title));
-  };
-
+const Home = () => {
   return (
     <SafeAreaView
       style={{
@@ -60,7 +42,7 @@ const Home = ({ navigation }) => {
         {/* TripsList */}
         <View style={{ flex: 1, width: "100%" }}>
           <View style={{ flex: 1 }}>
-            <TripList handleAddTrip={handleAddTrip} />
+            <TripList />
           </View>
         </View>
       </View>

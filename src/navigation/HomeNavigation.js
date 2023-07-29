@@ -4,6 +4,7 @@ import React from "react";
 import ROUTES from "./routes";
 import Home from "../screens/Home";
 import TripDetails from "../screens/TripDetails";
+import Profile from "../screens/Profile";
 
 const Stack = createStackNavigator();
 

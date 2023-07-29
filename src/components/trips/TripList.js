@@ -1,7 +1,6 @@
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
   FlatList,
   RefreshControl,
@@ -12,9 +11,8 @@ import TripCard from "../trips/TripCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
 import { useState } from "react";
-import ROUTES from "../../navigation/routes";
-import { TouchableOpacity } from "react-native-gesture-handler";
-const TripList = ({ handleAddTrip }) => {
+
+const TripList = () => {
   const [query, setQuery] = useState("");
 
   const {
@@ -25,7 +23,7 @@ const TripList = ({ handleAddTrip }) => {
     queryKey: ["trips"],
     queryFn: () => getAllTrips(),
   });
-  console.log("===============>", trips);
+
   if (trips?.length == 0)
     return (
       <>
@@ -42,16 +40,13 @@ const TripList = ({ handleAddTrip }) => {
         </ScrollView>
       </>
     );
-  const handledescription = () => {
-    navigation.navigate(ROUTES.TRIP_DETAILS, { trip: item });
-  };
+
   return (
     <>
       <FilterList setQuery={setQuery} />
       <FlatList
         data={trips?.filter((trip) => {
           if (trip.title.toLowerCase().includes(query.toLowerCase())) {
-            console.log(trip);
             return true;
           } else return false;
         })}

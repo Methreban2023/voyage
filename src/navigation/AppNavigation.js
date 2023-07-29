@@ -94,6 +94,7 @@ const AppNavigation = () => {
           name={ROUTES.APPROUTES.PROFILE_NAV}
           component={ProfileNavigation}
           options={{
+            headerShown: false,
             tabBarIcon: ({ color, size, focused }) => (
               <AntDesign
                 name="user"
