@@ -52,7 +52,7 @@ const CreateTrip = ({ navigation }) => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["trips"]);
-      // navigation.navigate(ROUTES.APPROUTES.HOME);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
   });
   const onChange = (event, selectedDate) => {

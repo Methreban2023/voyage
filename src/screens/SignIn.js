@@ -29,7 +29,7 @@ const SignIn = ({ navigation }) => {
     onSuccess: (data) => {
       saveToken(data.token);
       setUser(true);
-      // navigation.navigate(ROUTES.APPROUTES.HOME);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
     },
     onError: (error) => {
       console.log(error);
