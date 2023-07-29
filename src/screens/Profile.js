@@ -93,15 +93,15 @@ const Profile = () => {
             alignItems: "center",
           }}
         >
-          <MaterialIcons name="location-on" size={24} color="black" />
-          <Text
+          {/* <MaterialIcons name="location-on" size={24} color="black" /> */}
+          {/* <Text
             style={{
               ...FONTS.body4,
               marginLeft: 4,
             }}
           >
             Yarmouk, Kuwait
-          </Text>
+          </Text> */}
         </View>
 
         <View style={{ flexDirection: "row" }}>
