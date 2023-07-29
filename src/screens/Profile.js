@@ -54,7 +54,7 @@ const Profile = () => {
           source={require("../components/image/tPwCLS.jpg")}
           resizeMode="cover"
           style={{
-            height: 228,
+            height: 200,
             width: "100%",
           }}
         />
@@ -64,12 +64,12 @@ const Profile = () => {
           source={{ uri: `${BASE_URL}/${userInfo?.image}` }}
           resizeMode="contain"
           style={{
-            height: 155,
-            width: 155,
+            height: 130,
+            width: 130,
             borderRadius: 999,
             borderColor: COLORS.primary,
             borderWidth: 2,
-            marginTop: -90,
+            marginTop: -68,
           }}
         />
         <Text style={{ ...FONTS.h3, color: COLORS.primary, marginVertical: 8 }}>
@@ -90,15 +90,7 @@ const Profile = () => {
             alignItems: "center",
           }}
         >
-          {/* <MaterialIcons name="location-on" size={24} color="black" /> */}
-          {/* <Text
-            style={{
-              ...FONTS.body4,
-              marginLeft: 4,
-            }}
-          >
-            Yarmouk, Kuwait
-          </Text> */}
+          <Text> Bio: {userInfo.bio}</Text>
         </View>
 
         <View style={{ flexDirection: "row" }}>
@@ -131,8 +123,9 @@ const Profile = () => {
         </View>
         <View
           style={{
-            width: "100%",
-            height: 100,
+            width: "109%",
+            height: 400,
+            padding: 20,
           }}
         >
           <>
@@ -160,6 +153,7 @@ const Profile = () => {
             />
           </>
         </View>
+
       </View>
     </SafeAreaView>
   );
