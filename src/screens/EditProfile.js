@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../utils/colors/colors";
@@ -12,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import ROUTES from "../navigation/routes";
 import { Pressable, Image } from "react-native";
-
+import coverImage from "../components/image/cover.jpg";
 const EditProfile = ({ route }) => {
   const navigation = useNavigation();
   const { userInfo, setUserInfo } = route.params;
@@ -33,7 +39,6 @@ const EditProfile = ({ route }) => {
       console.log(error);
     },
   });
-  console.log(` image = ${userInfo.image}`);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -47,7 +52,7 @@ const EditProfile = ({ route }) => {
       setImage(result.assets[0].uri);
     }
   };
-  console.log(` image = ${userInfo.image}`);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -56,150 +61,179 @@ const EditProfile = ({ route }) => {
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: colors.black,
+          backgroundColor: colors.white,
           paddingHorizontal: 22,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <ScrollView>
-          <View
-            style={{
-              marginHorizontal: 12,
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              marginBottom: 20,
-              // backgroundColor: "yellow",
-              flex: 1,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {
-                console.log("first");
-                navigation.navigate(ROUTES.APPROUTES.PROFILE);
-              }}
-              style={{
-                // position: "absolute",
-                flex: 1,
-                // backgroundColor: "green",
-                flexDirection: "row",
-              }}
-            >
-              <MaterialIcons
-                name="keyboard-arrow-left"
-                size={24}
-                color={colors.white}
-              />
-              <Text
-                style={{
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: colors.white,
-                }}
-              >
-                Back to Profile
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* <View style={{ flex: 1, backgroundColor: colors.baby_blue }}> */}
-          <Pressable
-            onPress={pickImage}
-            style={{ backgroundColor: colors.orange, marginTop: 30 }}
-          >
-            <View style={styles.avatar_image}>
-              {(image || updateUserInfo.image) && (
-                <Image
-                  source={{
-                    uri: image || `${BASE_URL}/${updateUserInfo.image}`,
-                  }}
-                  style={{
-                    width: 200,
-                    height: 200,
-                    borderRadius: 100,
-                    borderWidth: 4,
-                    borderColor: colors.black,
-                  }}
-                />
-              )}
-            </View>
-          </Pressable>
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUpdateUserInfo({ ...updateUserInfo, firstName: value });
-            }}
-            value={updateUserInfo?.firstName}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUpdateUserInfo({ ...updateUserInfo, lastName: value });
-            }}
-            value={updateUserInfo.lastName}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => {
-              setUpdateUserInfo({ ...updateUserInfo, bio: value });
-            }}
-            value={!updateUserInfo.bio ? "My Bio..." : updateUserInfo?.bio}
-          />
-          {/* </View> */}
+        <ImageBackground
+          source={coverImage}
+          resizeMode="cover"
+          style={styles.imageBackground}
+        >
           <View
             style={{
               flex: 1,
+              position: "absolute",
+              backgroundColor: "rgba(255,255,255,0.75)",
+              paddingHorizontal: 22,
+              height: "100%",
+              width: "100%",
               justifyContent: "center",
               alignItems: "center",
-              fontWeight: "bold",
             }}
-          >
-            <Text style={styles.input}>My Trips</Text>
-            <Text style={styles.input}> {userInfo.trips.length}</Text>
-          </View>
-
-          <View>
+          />
+          <ScrollView>
             <View
               style={{
-                flexDirection: "column",
-                marginBottom: 6,
+                marginHorizontal: 12,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                marginBottom: 20,
+                flex: 1,
               }}
             >
-              <View
-                style={{
-                  height: 44,
-                  width: "100%",
-                  borderColor: colors.grey,
-                  borderRadius: 4,
-                  marginVertical: 6,
-                  justifyContent: "center",
-                  paddingLeft: 8,
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate(ROUTES.APPROUTES.PROFILE);
                 }}
-              ></View>
-            </View>
-          </View>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity
-              onPress={() => {
-                updateFn();
-              }}
-              style={{
-                backgroundColor: colors.primary,
-
-                borderRadius: 6,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
                 style={{
-                  color: colors.white,
+                  flex: 1,
+                  flexDirection: "row",
                 }}
               >
-                Save Change
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+                <MaterialIcons
+                  name="keyboard-arrow-left"
+                  size={24}
+                  color={colors.black}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: colors.black,
+                  }}
+                >
+                  Back to Profile
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Pressable
+              onPress={pickImage}
+              style={{
+                backgroundColor: colors.white,
+                marginTop: 30,
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                width: 200,
+                height: 200,
+                borderRadius: 100,
+                borderWidth: 4,
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <View style={styles.avatar_image}>
+                {(image || updateUserInfo.image) && (
+                  <Image
+                    source={{
+                      uri: image || `${BASE_URL}/${updateUserInfo.image}`,
+                    }}
+                    style={{
+                      width: 200,
+                      height: 200,
+                      borderRadius: 100,
+                      borderWidth: 4,
+                      borderColor: colors.orange,
+                    }}
+                  />
+                )}
+              </View>
+            </Pressable>
+            <TextInput
+              style={styles.input}
+              onChangeText={(value) => {
+                setUpdateUserInfo({ ...updateUserInfo, firstName: value });
+              }}
+              value={updateUserInfo?.firstName}
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={(value) => {
+                setUpdateUserInfo({ ...updateUserInfo, lastName: value });
+              }}
+              value={updateUserInfo.lastName}
+            />
+            <TextInput
+              style={styles.input}
+              onChangeText={(value) => {
+                setUpdateUserInfo({ ...updateUserInfo, bio: value });
+              }}
+              value={!updateUserInfo.bio ? "My Bio..." : updateUserInfo?.bio}
+            />
+
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                fontWeight: "bold",
+              }}
+            >
+              <Text style={styles.input}>My Trips</Text>
+              <Text style={styles.input}> {userInfo.trips.length}</Text>
+            </View>
+
+            <View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginBottom: 6,
+                }}
+              >
+                <View
+                  style={{
+                    height: 30,
+                    width: "100%",
+                    borderColor: colors.grey,
+                    borderRadius: 4,
+                    marginVertical: 6,
+                    justifyContent: "center",
+                    paddingLeft: 8,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      updateFn();
+                    }}
+                    style={{
+                      backgroundColor: colors.orange,
+                      borderRadius: 6,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      height: 50,
+                      width: 70,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: colors.black,
+                      }}
+                    >
+                      Save
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+        </ImageBackground>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -215,11 +249,17 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: "hidden",
     alignSelf: "center",
-    marginVertical: 20,
-    marginTop: 40,
+  },
+
+  imageBackground: {
+    flex: 1,
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
   },
   input: {
-    color: colors.white,
+    color: colors.black,
     fontWeight: "bold",
+    fontSize: 20,
   },
 });

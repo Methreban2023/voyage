@@ -14,6 +14,7 @@ import { signUp } from "../apis/auth/auth";
 import { colors } from "../utils/colors/colors";
 import { saveToken } from "../apis/auth/storage";
 import UserContext from "../context/UserContext";
+import ROUTES from "../navigation/routes";
 
 const SignUp = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({});
@@ -55,25 +56,23 @@ const SignUp = ({ navigation }) => {
     }
   };
 
-  // const validatePassword = (password) => {
-  //   const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+  const validatePassword = (password) => {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
 
-  //   if (!regex.test(password)) {
-  //     return setPasswordError(
-  //       "must be at least 8 characters long and contain one uppercase, one lowercase letter, and one number."
-  //     );
-  //   }
-
-  //   return setPasswordError("");
-  // };
-  // const passwordChangeHandler = (value) => {
-  //   setPasswordError(validatePassword(value));
-
-  //   if (passwordError === "") {
-  //     setPassword(value);
-  //     return setUserInfo({ ...userInfo, password: value });
-  //   }
-  // };
+    if (!regex.test(password)) {
+      return "must be at least 8 characters long and contain one uppercase, one lowercase letter, and one number.";
+    }
+    return "";
+  };
+  const passwordChangeHandler = (value) => {
+    const err = validatePassword(value);
+    console.log("===============>", err);
+    setPasswordError(err);
+    if (err === "") {
+      setPassword(value);
+      return setUserInfo({ ...userInfo, password: value });
+    }
+  };
 
   console.log(userInfo);
   return (
@@ -122,28 +121,27 @@ const SignUp = ({ navigation }) => {
         style={styles.input}
         secureTextEntry
         autoCapitalize="none"
-        onChangeText={(value) => {
-          setUserInfo({ ...userInfo, password: value });
-        }}
         // onChangeText={(value) => {
-        //   passwordChangeHandler(value);
+        //   setUserInfo({ ...userInfo, password: value });
         // }}
+        onChangeText={(value) => {
+          passwordChangeHandler(value);
+        }}
         placeholder="password"
       />
-      {/* <View>
+      <View>
         <Text style={(styles.text, (backgroundColor = colors.baby_blue))}>
           {passwordError !== "" && (
             <Text style={{ color: "red" }}>{passwordError}</Text>
           )}
         </Text>
-      </View> */}
+      </View>
 
       <Button
         title="Sign Me Up"
         onPress={() => {
-          // if (passwordError === "")
-          signupFn();
-          // console.log(passwordError);
+          if (passwordError === "") signupFn();
+          console.log(passwordError);
         }}
       />
     </View>
