@@ -48,6 +48,15 @@ const Profile = () => {
         paddingHorizontal: 22,
       }}
     >
+      <View
+        style={{
+          marginHorizontal: 12,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 20,
+        }}
+      ></View>
       <StatusBar backgroundColor={COLORS.gray} />
       <View style={{ width: "100%" }}>
         <Image
