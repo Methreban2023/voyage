@@ -2,16 +2,20 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ROUTES from "./routes";
 import ProfileNavigation from "./ProfileNavigation";
 import UserContext from "../context/UserContext";
+import { colors } from "../utils/colors/colors";
 
+// import { View, Text } from "react-native";
+import { removeToken } from "../apis/auth/storage";
 import AuthNavigation from "./AuthNavigation";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "../utils/colors/colors";
+
 import { useContext } from "react";
 import { View, Text } from "react-native";
 import HomeNavigation from "./HomeNavigation";
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
 import CreateTrip from "../screens/CreateTrip";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
@@ -29,6 +33,7 @@ const screenOptions = {
 const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
   const { setUser, user } = useContext(UserContext);
+
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <Tab.Screen
@@ -36,6 +41,16 @@ const AppNavigation = () => {
         component={HomeNavigation}
         options={{
           title: "",
+          headerTitle: () => (
+            <TouchableOpacity
+              onPress={() => {
+                removeToken();
+                setUser(false);
+              }}
+            >
+              <AntDesign name="logout" size={24} color="black" />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ color, size, focused }) => (
             <AntDesign
               name="home"
@@ -51,6 +66,17 @@ const AppNavigation = () => {
           name={ROUTES.APPROUTES.CREATE_TRIP}
           component={CreateTrip}
           options={{
+            title: "",
+            headerTitle: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  removeToken();
+                  setUser(false);
+                }}
+              >
+                <AntDesign name="logout" size={24} color="black" />
+              </TouchableOpacity>
+            ),
             tabBarIcon: ({ color, size, focused }) => {
               return (
                 <View
@@ -94,6 +120,17 @@ const AppNavigation = () => {
           name={ROUTES.APPROUTES.PROFILE_NAV}
           component={ProfileNavigation}
           options={{
+            title: "",
+            headerTitle: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  removeToken();
+                  setUser(false);
+                }}
+              >
+                <AntDesign name="logout" size={24} color="black" />
+              </TouchableOpacity>
+            ),
             tabBarIcon: ({ color, size, focused }) => (
               <AntDesign
                 name="user"
@@ -109,6 +146,17 @@ const AppNavigation = () => {
           name={ROUTES.AUTHROUTES.SIGNIN_NAV}
           component={AuthNavigation}
           options={{
+            title: "",
+            headerTitle: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  removeToken();
+                  setUser(false);
+                }}
+              >
+                <AntDesign name="logout" size={24} color="black" />
+              </TouchableOpacity>
+            ),
             tabBarIcon: ({ color, size, focused }) => (
               <AntDesign
                 name="adduser"

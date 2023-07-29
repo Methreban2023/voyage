@@ -14,7 +14,19 @@ const ProfileNavigation = () => {
       <Stack.Screen
         name={ROUTES.APPROUTES.PROFILE}
         component={Profile}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: () => (
+            <TouchableOpacity
+              onPress={() => {
+                removeToken();
+                setUser(false);
+              }}
+            >
+              <AntDesign name="logout" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+          headerShown: false,
+        }}
         screenOptions={{ headerShown: false }}
       />
       <Stack.Screen

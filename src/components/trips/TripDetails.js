@@ -9,7 +9,7 @@ import React from "react";
 import { BASE_URL } from "../../apis/";
 import { deleteTrip, updateTrip } from "../../apis/trips";
 
-const TripCard = ({ title, image, onPress = () => {} }) => {
+const TripDetail = ({ title, image, onPress = () => {} }) => {
   return (
     <TouchableHighlight
       onPress={() => onPress(title)}
@@ -71,6 +71,6 @@ const TripCard = ({ title, image, onPress = () => {} }) => {
   );
 };
 
-export default TripCard;
+export default TripDetail;
 
 const styles = StyleSheet.create({});
