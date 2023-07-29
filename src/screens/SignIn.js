@@ -39,7 +39,7 @@ const SignIn = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <Image
-          source={require("../media/blackLogo.png")}
+          source={require("../media/whiteLogo.png")}
           style={styles.image}
         />
         <View style={[styles.entery, { flex: 0.8 }]}>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.black,
+    backgroundColor: colors.white,
   },
   input: {
     height: 40,
