@@ -19,7 +19,7 @@ import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../apis/profile/profile";
-import { removeToken } from "../apis/auth/storage";
+
 import TripCard from "../components/trips/TripCard";
 import { BASE_URL } from "../apis";
 const Profile = () => {
@@ -38,10 +38,7 @@ const Profile = () => {
     },
   });
   // console.log(` this is a profile infor = ${userInfo.firstName}`);
-  const pressHandler = () => {
-    removeToken();
-    setUser(false);
-  };
+
   console.log(`${BASE_URL}/${dataProfile?.image}`);
   return (
     <SafeAreaView
@@ -163,14 +160,6 @@ const Profile = () => {
             />
           </>
         </View>
-        <Button
-          title="SignOut"
-          onPress={() => {
-            pressHandler();
-          }}
-        >
-          Sign Out
-        </Button>
       </View>
     </SafeAreaView>
   );
