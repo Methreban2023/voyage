@@ -16,19 +16,22 @@ const getProfileById = async (id) => {
     console.log(error);
   }
 };
-const updateProfile = async (id, userInfo) => {
+const updateProfile = async (userInfo) => {
   const formdata = new FormData();
   for (const key in userInfo) {
     if (key !== "image") {
       formdata.append(key, userInfo[key]);
+    } else {
+      if (userInfo.image?.includes("file://"))
+        formdata.append("image", {
+          name: userInfo.image,
+          type: "image/jpeg",
+          uri: userInfo.image,
+        });
     }
   }
-  formdata.append("image", {
-    name: userInfo.image,
-    type: "image/jpeg",
-    uri: userInfo.image,
-  });
-  const res = await instance.put(`/profile/${id}`, formdata);
+
+  const res = await instance.put(`/profile`, formdata);
   return res.data;
 };
 

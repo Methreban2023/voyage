@@ -15,6 +15,7 @@ const FilterList = ({ list = [], onPress = () => {}, setQuery }) => {
     <View>
       <Searchbar
         placeholder="Search"
+        style={{ borderRadius: 17, margin: 5, backgroundColor: "#FEAA027A" }}
         onChangeText={(query) => setQuery(query)}
       />
       <ScrollView
