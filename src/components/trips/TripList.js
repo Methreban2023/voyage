@@ -55,7 +55,7 @@ const TripList = () => {
         contentContainerStyle={{
           marginTop: 10,
           paddingBottom: 50,
-          backgroundColor: "black",
+          // backgroundColor: "black",
         }}
         numColumns={2}
         keyExtractor={(item) => item._id}

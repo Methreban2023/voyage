@@ -39,7 +39,7 @@ const TripCard = ({
       }}
     >
       <View style={style.card}>
-        <View style={{ alignItems: "flex-end" }}>
+        {/* <View style={{ alignItems: "flex-end" }}>
           <View
             style={{
               width: 30,
@@ -58,7 +58,7 @@ const TripCard = ({
               color={false ? colors.red : colors.black}
             />
           </View>
-        </View>
+        </View> */}
 
         <Image
           source={{

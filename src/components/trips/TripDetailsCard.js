@@ -36,7 +36,7 @@ const TripDetails = ({
         <View style={{ flex: 1 }}>
           <View style={[{ flex: 1 }]}>
             {/* add favorite heart icon - if user add to favorite */}
-            <View style={{ alignItems: "flex-end" }}>
+            {/* <View style={{ alignItems: "flex-end" }}>
               <View
                 style={{
                   width: 30,
@@ -56,7 +56,7 @@ const TripDetails = ({
                   onPress={() => navigation.navigate("addToFavorite")}
                 />
               </View>
-            </View>
+            </View> */}
             {/* image of the trip */}
             <View
               style={{
