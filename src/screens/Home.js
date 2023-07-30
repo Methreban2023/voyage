@@ -21,23 +21,9 @@ const Home = () => {
           marginBottom: 20,
         }}
       >
-        {/* <View>
-          <Text Style={{ fontSize: 25, fontWeight: "bold" }}>Welcome To</Text>
-          <Text
-            Style={{
-              fontSize: "38",
-              fontWeight: "bold",
-              color: "dark_blue",
-            }}
-          >
-            Bon Voyage
-          </Text>
-          <Text
-            style={{ fontSize: 25, fontWeight: "bold", color: colors.black }}
-          >
-            The world is a book and those who do not travel read only one page
-          </Text>
-        </View> */}
+        <View style={{ padding: 20 }}>
+          <Text style={{ fontSize: "30", fontWeight: "bold" }}>Bon Voyage</Text>
+        </View>
 
         {/* TripsList */}
         <View style={{ flex: 1, width: "100%" }}>
