@@ -318,7 +318,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightgray,
     borderRadius: 17,
     overflow: "hidden",
-    paddingTop:"30%"
   },
 
   countryStyle: {
