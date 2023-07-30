@@ -39,7 +39,7 @@ const SignIn = ({ navigation }) => {
     <>
       <View style={styles.container}>
         <Image
-          source={require("../media/blackLogo.png")}
+          source={require("../media/whiteLogo.png")}
           style={styles.image}
         />
         <View style={[styles.entery, { flex: 0.8 }]}>
@@ -62,6 +62,28 @@ const SignIn = ({ navigation }) => {
               setUserInfo({ ...userInfo, password: value });
             }}
           />
+
+          <View
+            style={{
+              flex: 0.5,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.AUTHROUTES.FORGOT)}
+            >
+              <Text style={styles.link_text}>Forgot password?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate(ROUTES.AUTHROUTES.SIGNUP)}
+            >
+              <Text style={styles.link_text}>SignUp</Text>
+            </TouchableOpacity>
+          </View>
+
           <Button
             title="SignIn"
             onPress={() => {
@@ -69,19 +91,6 @@ const SignIn = ({ navigation }) => {
               signinFn();
             }}
           />
-        </View>
-        <View style={styles.link_position}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.AUTHROUTES.FORGOT)}
-          >
-            <Text style={styles.link_text}>Forgot password?</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate(ROUTES.AUTHROUTES.SIGNUP)}
-          >
-            <Text style={styles.link_text}>SignUp</Text>
-          </TouchableOpacity>
         </View>
       </View>
       {isLoading && (
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.black,
+    backgroundColor: colors.white,
   },
   input: {
     height: 40,

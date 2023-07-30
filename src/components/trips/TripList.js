@@ -45,7 +45,7 @@ const TripList = () => {
     <>
       <FilterList setQuery={setQuery} />
       <FlatList
-        data={trips?.filter((trip) => {
+        data={trips?.reverse()?.filter((trip) => {
           if (trip.title.toLowerCase().includes(query.toLowerCase())) {
             return true;
           } else return false;
@@ -55,7 +55,7 @@ const TripList = () => {
         contentContainerStyle={{
           marginTop: 10,
           paddingBottom: 50,
-          backgroundColor: "black",
+          // backgroundColor: "black",
         }}
         numColumns={2}
         keyExtractor={(item) => item._id}
@@ -74,6 +74,9 @@ const TripList = () => {
               description={item.description}
               createdBy={item.createdBy}
               onPress={() => {}}
+              tripDate={item.tripDate}  
+              country={item.country}
+              _id={item._id}
             />
           </View>
         )}

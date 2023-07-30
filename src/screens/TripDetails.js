@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "../utils/colors/colors";
 import TripDetailsCard from "../components/trips/TripDetailsCard";
 const TripDetails = ({ route }) => {
-  const { createdBy, description, title, image } = route.params;
+  const { createdBy, description, title, image, country, tripDate,_id  } = route.params;
 
   return (
     <SafeAreaView
@@ -25,7 +25,7 @@ const TripDetails = ({ route }) => {
         }}
       >
         <View style={{ flex: 1 }}>
-          <TripDetailsCard {...{ createdBy, description, title, image }} />
+          <TripDetailsCard {...{ createdBy, description, title, image, tripDate, country ,_id  }} />
         </View>
       </View>
     </SafeAreaView>

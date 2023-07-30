@@ -21,8 +21,8 @@ const Home = () => {
           marginBottom: 20,
         }}
       >
-        <View>
-          <Text Style={{ fontWeight: "bold" }}>Welcome To</Text>
+        {/* <View>
+          <Text Style={{ fontSize: 25, fontWeight: "bold" }}>Welcome To</Text>
           <Text
             Style={{
               fontSize: "38",
@@ -37,7 +37,7 @@ const Home = () => {
           >
             The world is a book and those who do not travel read only one page
           </Text>
-        </View>
+        </View> */}
 
         {/* TripsList */}
         <View style={{ flex: 1, width: "100%" }}>

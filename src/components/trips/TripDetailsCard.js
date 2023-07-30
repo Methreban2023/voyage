@@ -14,7 +14,11 @@ import style from "react-native-datepicker/style";
 import { deleteTrip, updateTrip } from "../../apis/trips";
 import { BASE_URL } from "../../apis";
 import { useNavigation } from "@react-navigation/native";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteTrip } from "../../apis/trips";
+import ROUTES from "../../navigation/routes";
+import { getProfile } from "../../apis/profile/profile";
+
 const width = Dimensions.get("screen").width / 2 - 30;
 
 const TripDetails = ({
@@ -23,20 +27,26 @@ const TripDetails = ({
   onPress = () => {},
   description,
   createdBy,
+  country,
+  tripDate,
+  _id,
 }) => {
   const navigation = useNavigation();
-  const { mutate: handleDeleteTripCard, error } = useMutation({
-    mutationFn: () => ({ deleteTrip }),
+  const queryClient = useQueryClient();
+
+  const { data: dataProfile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
+
+  const { mutate: deleteTripFun } = useMutation({
+    mutationFn: () => deleteTrip(_id),
     onSuccess: () => {
+      queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.APPROUTES.HOME);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
-  const handlePressCreatedBy = () => {
-    setSelectedCreatedBy(createdBy);
-  };
+
   return (
     <View
       style={{
@@ -49,7 +59,7 @@ const TripDetails = ({
         <View style={{ flex: 1 }}>
           <View style={[{ flex: 1 }]}>
             {/* add favorite heart icon - if user add to favorite */}
-            <View style={{ alignItems: "flex-end" }}>
+            {/* <View style={{ alignItems: "flex-end" }}>
               <View
                 style={{
                   width: 30,
@@ -69,7 +79,7 @@ const TripDetails = ({
                   onPress={() => navigation.navigate("addToFavorite")}
                 />
               </View>
-            </View>
+            </View> */}
             {/* image of the trip */}
             <View
               style={{
@@ -107,9 +117,10 @@ const TripDetails = ({
                     fontWeight: "bold",
 
                     alignContent: "flex-start",
+                    backgroundColor: "#9acd32",
                   }}
                 >
-                  Why{" "}
+                  Why{" ("}
                   <Text
                     style={{
                       fontStyle: "italic",
@@ -119,7 +130,7 @@ const TripDetails = ({
                   >
                     {title}
                   </Text>
-                  is amazing trip?
+                  {" )"} is amazing trip?
                 </Text>
                 <Text
                   style={{
@@ -132,7 +143,9 @@ const TripDetails = ({
                   {description}
                 </Text>
               </View>
+              <Text>Trip date: {tripDate}</Text>
 
+              <Text>Country: {country}</Text>
               {/* Adding Edit and Delete buttons */}
               <View
                 style={{
@@ -141,23 +154,35 @@ const TripDetails = ({
                   justifyContent: "space-between",
                 }}
               >
-                <Button
-                  title="Update Trip"
-                  onPress={() => navigation.navigate("updateTrip")}
-                />
+                {dataProfile?.username === createdBy?.username && (
+                  <>
+                    <Button
+                      style={{
+                        width: 100,
+                        height: 50,
+                        backgroundColor: "green",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      title="Update Trip"
+                      onPress={() => navigation.navigate("updateTrip")}
+                    />
 
-                <Button
-                  title="Delete Trip"
-                  style={{
-                    width: 100,
-                    height: 50,
-                    backgroundColor: "green",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: 30,
-                  }}
-                  onPress={() => handleDeleteTripCard(trip.id)}
-                />
+                    <Button
+                      title="Delete Trip"
+                      style={{
+                        width: 100,
+                        height: 50,
+                        backgroundColor: "green",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      onPress={() => deleteTripFun()}
+                    />
+                  </>
+                )}
               </View>
 
               <View style={{ alignItems: "flex-end" }}>

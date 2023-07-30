@@ -23,6 +23,8 @@ const TripCard = ({
   onPress = () => {},
   createdBy,
   description,
+  tripDate, 
+  country,_id
 }) => {
   // const {data:}
   const navigation = useNavigation();
@@ -35,11 +37,13 @@ const TripCard = ({
           description,
           title,
           image,
+          tripDate, 
+          country,_id
         });
       }}
     >
       <View style={style.card}>
-        <View style={{ alignItems: "flex-end" }}>
+        {/* <View style={{ alignItems: "flex-end" }}>
           <View
             style={{
               width: 30,
@@ -58,7 +62,7 @@ const TripCard = ({
               color={false ? colors.red : colors.black}
             />
           </View>
-        </View>
+        </View> */}
 
         <Image
           source={{
