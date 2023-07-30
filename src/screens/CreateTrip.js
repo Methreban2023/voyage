@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker";
-// import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+
 import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
 import { colors } from "../utils/colors/colors";
 // import CountryCodeDropdownPicker from 'react-native-dropdown-country-picker'
@@ -46,7 +46,7 @@ const CreateTrip = ({ navigation }) => {
         title: tripInfo.title,
         description: tripInfo.description,
         image: image,
-        tripDate: date,
+        tripDate: selectedStartDate,
         country: selectedCountry,
       }),
     onSuccess: () => {
@@ -68,10 +68,6 @@ const CreateTrip = ({ navigation }) => {
   const showDatepicker = () => {
     showMode("date");
   };
-
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // };
 
   const showCountrypicker = () => {
     showMode("Country");
@@ -133,13 +129,14 @@ console.log(tripInfo)
         }}
       >
         <View style={styles.container}>
-          <Text>Create</Text>
+          <Text style={{fontSize:50 }}>Create</Text>
+          {/* IMAGE */}
           <Pressable onPress={pickImage}>
             <View style={styles.Trip_image}>
               {image && (
                 <Image
                   source={{ uri: image }}
-                  style={{ width: 100, height: 100 }}
+                  style={{ width: "100%", height: "100%" }}
                 />
               )}
             </View>
@@ -164,169 +161,84 @@ console.log(tripInfo)
           />
           <Text style={styles.text}>{tripInfo.description}</Text>
           {/* <Text style={styles.text}>Trip Destination</Text> */}
-          <>
-            <Button onPress={showCountrypicker} title="Select Country" />
-
-            {show && (
-              <View style={styles.countryStyle}>
-                <CountryPicker
-                  withFilter
-                  withFlag
-                  withCountryNameButton
-                  withAlphaFilter
-                  onSelect={handleCountrySelect}
-                />
-                {selectedCountry && (
-                  <Text style={styles.selectedCountryText}>
-                    Selected Country: {selectedCountry}
-                  </Text>
-                )}
-              </View>
-            )}
-          </>
-          <></>
-          <Text style={styles.text}>Trip Date</Text>
-          <>
-            <Button onPress={showDatepicker} title="Select Date" />
-
-            {show && (
-              <DateTimePicker
-                testID="datePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                onChange={onChange}
-              />
-            )}
-          </>
-
-          <Button
-            title="Create"
-            onPress={() => {
-              createTripFunction();
-            }}
-          />
-        </View>
-      </View>
-
       
-      <Text style={styles.text}>Trip title</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => {
-          setTripInfo({ ...tripInfo, title: value });
-        }}
-        placeholder="Trip Title"
-      />
 
-
-<Text style={styles.text}>Trip Description</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => {
-          setTripInfo({ ...tripInfo, description: value });
-        }}
-        placeholder="Description"
-      />
-  
-
-  <Text style={styles.text}>Trip Destination</Text>
-  <>
-  <Button onPress={showCountrypicker} title="Show country picker!" />
-    
-      {show && (
-        <View style={styles.countryStyle}>
+          <View style={{ width:"90%"}}>
         <CountryPicker
           withFilter
           withFlag
           withCountryNameButton
           withAlphaFilter
           onSelect={handleCountrySelect}
-        
+        containerButtonStyle={{borderWidth:2, borderColor:colors.orange, width:150, paddingHorizontal:5, paddingVertical:3, borderRadius:5, justifyContent:"center", alignItems:"center"}}
         />
         {selectedCountry && (
           <Text style={styles.selectedCountryText}>Selected Country: {selectedCountry}</Text>
         )}
      
     </View>
-      )}
-    </>
- <>
 
-  
-    </>
- <Text style={styles.text}>Trip Date</Text>
-  {/* <>
-  <Button onPress={showDatepicker} title="Show date picker!" />
-    
-      {show && (
-        <DateTimePicker
-          testID="datePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
-    </> */}
+        
+ 
 
-<Modal
-        animationType="slide"
-        transparent={true}
-        visible={openStartDatePicker}
-      >
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <View
-            style={{
-              margin: 20,
-              backgroundColor: COLORS.white,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 20,
-              padding: 35,
-              width: "90%",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 4,
-              elevation: 5,
-            }}
-          >
-            <DatePicker
-              mode="calendar"
-              minimumDate={startDate}
-              selected={startedDate}
-              onDateChanged={handleChangeStartDate}
-              onSelectedChange={(date) => setSelectedStartDate(date)}
-              options={{
-                backgroundColor: COLORS.white,
-                textHeaderColor: "#ffa500",
-                textDefaultColor: COLORS.black,
-                selectedTextColor: COLORS.black,
-                mainColor: "#ffa500",
-                textSecondaryColor: COLORS.green,
-                borderColor:"#ffa500",
-              }}
-            />
+ <Modal
+         animationType="slide"
+         transparent={true}
+         visible={openStartDatePicker}
+       >
+         <View
+           style={{
+             flex: 1,
+             alignItems: "center",
+             justifyContent: "center",
+           }}
+         >
+           <View
+             style={{
+               margin: 20,
+               backgroundColor: COLORS.white,
+               alignItems: "center",
+               justifyContent: "center",
+               borderRadius: 20,
+               padding: 35,
+               width: "90%",
+               shadowColor: "#000",
+               shadowOffset: {
+                 width: 0,
+                 height: 2,
+               },
+               shadowOpacity: 0.25,
+               shadowRadius: 4,
+               elevation: 5,
+             }}
+           >
+             <DatePicker
+               mode="calendar"
+               minimumDate={startDate}
+               selected={startedDate}
+               onDateChanged={handleChangeStartDate}
+               onSelectedChange={(date) => setSelectedStartDate(date)}
+               options={{
+                 backgroundColor: COLORS.white,
+                 textHeaderColor: "#ffa500",
+                 textDefaultColor: COLORS.black,
+                 selectedTextColor: COLORS.black,
+                 mainColor: "#ffa500",
+                 textSecondaryColor: COLORS.green,
+                 borderColor:"#ffa500",
+               }}
+             />
+ 
+             <TouchableOpacity onPress={handleOnPressStartDate}>
+               <Text style={{ ...FONTS.body3, color: COLORS.black}}>Close</Text>
+             </TouchableOpacity>
+           </View>
+         </View>
+       </Modal>
 
-            <TouchableOpacity onPress={handleOnPressStartDate}>
-              <Text style={{ ...FONTS.body3, color: COLORS.black}}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
 
       
-<TouchableOpacity
+       <TouchableOpacity
               onPress={handleOnPressStartDate}
               style={{
                 height: 44,
@@ -339,8 +251,22 @@ console.log(tripInfo)
                 paddingLeft: 8,
               }}
             >
-              <Text>{selectedStartDate}</Text> 
+              <Text> Trip date: {selectedStartDate}</Text> 
               </TouchableOpacity>
+
+
+
+
+        </View>
+      </View>
+
+      
+
+  
+
+
+
+
   <Button
         title="Create"
         onPress={() => {
@@ -387,10 +313,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   Trip_image: {
-    width: 100,
-    height: 100,
-    backgroundColor: "grey",
-    borderRadius: 130,
+    width: 300,
+    height: 200,
+    backgroundColor: colors.lightgray,
+    borderRadius:17,
     overflow: "hidden",
   },
 

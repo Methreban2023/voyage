@@ -23,6 +23,8 @@ const TripCard = ({
   onPress = () => {},
   createdBy,
   description,
+  tripDate, 
+  country,_id
 }) => {
   // const {data:}
   const navigation = useNavigation();
@@ -35,6 +37,8 @@ const TripCard = ({
           description,
           title,
           image,
+          tripDate, 
+          country,_id
         });
       }}
     >
