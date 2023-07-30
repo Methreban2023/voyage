@@ -3,12 +3,13 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View,
+  View
+  ,
 } from "react-native";
 import React from "react";
 import { BASE_URL } from "../../apis/";
 import { deleteTrip, updateTrip } from "../../apis/trips";
-
+import { colors } from "../../utils/colors/colors";
 const TripDetail = ({ title, image, onPress = () => {} }) => {
   return (
     <TouchableHighlight
@@ -31,8 +32,10 @@ const TripDetail = ({ title, image, onPress = () => {} }) => {
           source={{
             uri: image,
           }}
+          
           width="100%"
           height="100%"
+          
         />
         <View
           style={{
@@ -40,8 +43,9 @@ const TripDetail = ({ title, image, onPress = () => {} }) => {
             width: "100%",
             height: "100%",
             position: "absolute",
-            backgroundColor: "#00000070",
+           
             zIndex: 1,
+            
           }}
         ></View>
         <Text

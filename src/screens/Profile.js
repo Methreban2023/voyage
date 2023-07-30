@@ -84,7 +84,7 @@ const Profile = () => {
         <Text style={{ ...FONTS.h3, color: COLORS.primary, marginVertical: 8 }}>
           {`${userInfo?.firstName} ${userInfo?.lastName}`}
         </Text>
-        <Text
+        {/* <Text
           style={{
             color: COLORS.black,
             ...FONTS.body4,
