@@ -130,7 +130,7 @@ const CreateTrip = ({ navigation }) => {
         }
       >
         <View style={styles.container}>
-          <Text style={{ fontSize: 50 }}>Create</Text>
+          <Text style={{ fontSize: 50, color:colors.orange}}>Create</Text>
           {/* IMAGE */}
           <Pressable onPress={pickImage}>
             <View style={styles.Trip_image}  >
@@ -163,12 +163,13 @@ const CreateTrip = ({ navigation }) => {
           <Text style={styles.text}>{tripInfo.description}</Text>
           {/* <Text style={styles.text}>Trip Destination</Text> */}
 
-          <View style={{ width: "90%" }}>
+          <View style={{ width: "90%",alignItems: "center" , paddingBottom:10, justifyContent: "center"}}>
             <CountryPicker
               withFilter
               withFlag
               withCountryNameButton
               withAlphaFilter
+              
               onSelect={handleCountrySelect}
               containerButtonStyle={{
                 borderWidth: 2,
@@ -183,7 +184,7 @@ const CreateTrip = ({ navigation }) => {
             />
             {selectedCountry && (
               <Text style={styles.selectedCountryText}>
-                Selected Country: {selectedCountry}
+                Select Country: {selectedCountry}
               </Text>
             )}
           </View>
@@ -203,7 +204,7 @@ const CreateTrip = ({ navigation }) => {
               <View
                 style={{
                   margin: 20,
-                  backgroundColor: COLORS.white,
+                  backgroundColor: colors.white,
                   alignItems: "center",
                   justifyContent: "center",
                   borderRadius: 20,
@@ -226,18 +227,18 @@ const CreateTrip = ({ navigation }) => {
                   onDateChanged={handleChangeStartDate}
                   onSelectedChange={(date) => setSelectedStartDate(date)}
                   options={{
-                    backgroundColor: COLORS.white,
+                    backgroundColor: colors.white,
                     textHeaderColor: "#ffa500",
-                    textDefaultColor: COLORS.black,
-                    selectedTextColor: COLORS.black,
+                    textDefaultColor:colors.light_blue,
+                    selectedTextColor: colors.light_blue,
                     mainColor: "#ffa500",
-                    textSecondaryColor: COLORS.green,
+                    textSecondaryColor: colors.light_blue,
                     borderColor: "#ffa500",
                   }}
                 />
 
                 <TouchableOpacity onPress={handleOnPressStartDate}>
-                  <Text style={{ ...FONTS.body3, color: COLORS.black }}>
+                  <Text style={{ ...FONTS.body3, color: colors.light_blue }}>
                     Close
                   </Text>
                 </TouchableOpacity>
@@ -248,22 +249,25 @@ const CreateTrip = ({ navigation }) => {
           <TouchableOpacity
             onPress={handleOnPressStartDate}
             style={{
-              height: 44,
-              width: "100%",
-              borderColor: COLORS.white,
-              borderWidth: 1,
-              borderRadius: 4,
-              marginVertical: 6,
-              justifyContent: "center",
-              paddingLeft: 8,
+        
+                borderWidth: 2,
+                borderColor: colors.orange,
+                width: 150,
+                paddingHorizontal: 5,
+                paddingVertical: 3,
+                borderRadius: 5,
+                justifyContent: "center",
+                alignItems: "center",
+              
             }}
           >
-            <Text> Trip date: {selectedStartDate}</Text>
+            <Text > Trip date: {selectedStartDate}</Text>
           </TouchableOpacity>
         </View>
 
-        <Button
+        <Button 
           title="Create"
+          
           onPress={() => {
             createTripFunction();
           }}
@@ -326,5 +330,6 @@ const styles = StyleSheet.create({
   selectedCountryText: {
     fontSize: 18,
     marginTop: 20,
+ 
   },
 });
