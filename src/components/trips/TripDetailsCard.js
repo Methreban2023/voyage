@@ -26,33 +26,25 @@ const TripDetails = ({
   onPress = () => {},
   description,
   createdBy,
-  country, 
+  country,
   tripDate,
   _id,
-  
 }) => {
   const navigation = useNavigation();
-const queryClient= useQueryClient();
+  const queryClient = useQueryClient();
+  console.log({ createdBy });
+  const { data: dataProfile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
 
-const {
-  data: dataProfile,
-
-} = useQuery({
-  queryKey: ["profile"],
-  queryFn: () => getProfile()
-  
-  
-});
-
-
- const{mutate: deleteTripFun }=useMutation({
-  mutationFn:()=>deleteTrip(_id),
-  onSuccess: () => {
-    queryClient.invalidateQueries(["trips"]);
-    navigation.navigate(ROUTES.APPROUTES.HOME);
-  },
- })
-
+  const { mutate: deleteTripFun } = useMutation({
+    mutationFn: () => deleteTrip(_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["trips"]);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
+    },
+  });
 
   return (
     <View
@@ -140,8 +132,7 @@ color: colors.orange,
                   >
                     {title}
                   </Text>
-                 
-                   {" )"} is amazing trip?
+                  {" )"} is amazing trip?
                 </Text>
                 <Text
                   style={{
@@ -169,6 +160,29 @@ color: colors.orange,
                 }}
               >
                {dataProfile?.username ===createdBy?.username &&
+               <>
+                <Button
+                      style={{
+                        width: 100,
+                        height: 50,
+                        backgroundColor: "green",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      title="Update Trip"
+                      onPress={() =>
+                        navigation.navigate("updateTrip", {
+                          description,
+                          createdBy,
+                          country,
+                          tripDate,
+                          _id,
+                          image,
+                          title,
+                        })
+                      }
+                    />
                 <Button
                 title="Delete Trip"
                 style={{
@@ -179,9 +193,10 @@ color: colors.orange,
                   alignItems: "center",
                   borderRadius: 30,
                   color: colors.orange
-                            }}
+                }}
                 onPress={() => deleteTripFun()}
                 />
+                </>
               }
               </View>
 

@@ -58,8 +58,14 @@ const TripDetail = ({ title, image, onPress = () => {} }) => {
         >
           {title}
         </Text>
-        
-        <Button 
+
+        <Button
+          title="Update"
+          onPress={() => {
+            updateTrip();
+          }}
+        />
+        <Button
           title="Delete"
           onPress={() => {
             deleteTrip();

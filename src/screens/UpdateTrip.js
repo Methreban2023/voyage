@@ -10,9 +10,8 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 
 import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
@@ -25,7 +24,17 @@ import ROUTES from "../navigation/routes";
 import CountryPicker from "react-native-country-picker-modal";
 import { BASE_URL } from "../apis";
 
-const CreateTrip = ({ navigation }) => {
+const UpdateTrip = ({ navigation, route }) => {
+  const {
+    description,
+    createdBy,
+    country,
+    tripDate,
+    _id,
+    image: oldImage,
+    title,
+  } = route.params;
+
   const [tripInfo, setTripInfo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(new Date(1598051730000));
@@ -47,7 +56,6 @@ const CreateTrip = ({ navigation }) => {
         image: image,
         tripDate: selectedStartDate,
         country: selectedCountry,
-
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["trips"]);
@@ -106,12 +114,22 @@ const CreateTrip = ({ navigation }) => {
     setOpenStartDatePicker(!openStartDatePicker);
   };
 
-  console.log(tripInfo);
-
+  useEffect(() => {
+    setTripInfo({
+      description,
+      createdBy,
+      country,
+      tripDate,
+      _id,
+      image: oldImage,
+      title,
+    });
+    setSelectedCountry(country);
+    setSelectedStartDate(tripDate);
+  }, []);
+  console.log(country);
   return (
-
     <SafeAreaView
-  
       style={{
         flex: 1,
         backgroundColor: COLORS.white,
@@ -130,13 +148,13 @@ const CreateTrip = ({ navigation }) => {
         }
       >
         <View style={styles.container}>
-          <Text style={{ fontSize: 50 }}>Create</Text>
+          <Text style={{ fontSize: 50 }}>Update</Text>
           {/* IMAGE */}
           <Pressable onPress={pickImage}>
-            <View style={styles.Trip_image}  >
-              {image && (
+            <View style={styles.Trip_image}>
+              {(image || oldImage) && (
                 <Image
-                  source={{ uri: image }}
+                  source={{ uri: image || `${BASE_URL}/${oldImage}` }}
                   style={{ width: "100%", height: "100%" }}
                 />
               )}
@@ -150,6 +168,7 @@ const CreateTrip = ({ navigation }) => {
               setTripInfo({ ...tripInfo, title: value });
             }}
             placeholder="Trip Title"
+            value={tripInfo?.title}
           />
           {/* -------- */}
           <Text style={styles.text}>Trip Description</Text>
@@ -159,6 +178,7 @@ const CreateTrip = ({ navigation }) => {
               setTripInfo({ ...tripInfo, description: value });
             }}
             placeholder="Description"
+            value={tripInfo?.description}
           />
           <Text style={styles.text}>{tripInfo.description}</Text>
           {/* <Text style={styles.text}>Trip Destination</Text> */}
@@ -181,7 +201,7 @@ const CreateTrip = ({ navigation }) => {
                 alignItems: "center",
               }}
             />
-            {selectedCountry && (
+            {(selectedCountry || country) && (
               <Text style={styles.selectedCountryText}>
                 Selected Country: {selectedCountry}
               </Text>
@@ -263,7 +283,7 @@ const CreateTrip = ({ navigation }) => {
         </View>
 
         <Button
-          title="Create"
+          title="Update"
           onPress={() => {
             createTripFunction();
           }}
@@ -273,7 +293,7 @@ const CreateTrip = ({ navigation }) => {
   );
 };
 
-export default CreateTrip;
+export default UpdateTrip;
 
 const styles = StyleSheet.create({
   container: {
@@ -314,7 +334,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightgray,
     borderRadius: 17,
     overflow: "hidden",
-    paddingTop:"30%"
   },
 
   countryStyle: {

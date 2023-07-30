@@ -162,7 +162,6 @@ const Profile = () => {
             />
           </>
         </View>
-
       </View>
     </SafeAreaView>
   );
