@@ -16,7 +16,7 @@ const createTrip = async (data) => {
   for (const key in data) {
     if (key != "image") {
       formData.append(key, data[key]);
-    }else{
+    } else {
       formData.append("image", {
         name: data.image,
         type: "image/jpeg",
@@ -24,8 +24,7 @@ const createTrip = async (data) => {
       });
     }
   }
-
-
+  console.log(formData);
   const res = await instance.post("/trip", formData);
   return res.data;
 };
@@ -36,24 +35,22 @@ const updateTrip = async (id, data) => {
   for (const key in data) {
     if (key != "image") {
       formData.append(key, data[key]);
+    } else {
+      formData.append("image", {
+        name: data.image,
+        type: "image/jpeg",
+        uri: data.image,
+      });
     }
   }
-
-  formData.append("image", {
-    name: data.image,
-    type: "image/jpeg",
-    uri: data.image,
-  });
 
   const res = await instance.put(`/trip/${id}`, formData);
   return res.data;
 };
-
 
 const deleteTrip = async (id) => {
   const res = await instance.delete(`/trip/${id}`);
   return res.data;
 };
 
-
-export { getAllTrips, getTripById, createTrip,updateTrip, deleteTrip };
+export { getAllTrips, getTripById, createTrip, updateTrip, deleteTrip };

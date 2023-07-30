@@ -25,9 +25,9 @@ const Home = () => {
           <Text Style={{ fontSize: 25, fontWeight: "bold" }}>Welcome To</Text>
           <Text
             Style={{
-              fontSize: 38,
+              fontSize: "38",
               fontWeight: "bold",
-              color: colors.dark_blue,
+              color: "dark_blue",
             }}
           >
             Bon Voyage

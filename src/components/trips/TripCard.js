@@ -112,3 +112,6 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 });
+
+//to calculate the workspace area size - i use dimention
+//https://reactnative.dev/docs/dimensions

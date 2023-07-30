@@ -26,33 +26,25 @@ const TripDetails = ({
   onPress = () => {},
   description,
   createdBy,
-  country, 
+  country,
   tripDate,
   _id,
-  
 }) => {
   const navigation = useNavigation();
-const queryClient= useQueryClient();
+  const queryClient = useQueryClient();
+  console.log({ createdBy });
+  const { data: dataProfile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getProfile(),
+  });
 
-const {
-  data: dataProfile,
-
-} = useQuery({
-  queryKey: ["profile"],
-  queryFn: () => getProfile()
-  
-  
-});
-
-
- const{mutate: deleteTripFun }=useMutation({
-  mutationFn:()=>deleteTrip(_id),
-  onSuccess: () => {
-    queryClient.invalidateQueries(["trips"]);
-    navigation.navigate(ROUTES.APPROUTES.HOME);
-  },
- })
-
+  const { mutate: deleteTripFun } = useMutation({
+    mutationFn: () => deleteTrip(_id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["trips"]);
+      navigation.navigate(ROUTES.APPROUTES.HOME);
+    },
+  });
 
   return (
     <View
@@ -137,8 +129,7 @@ const {
                   >
                     {title}
                   </Text>
-                 
-                   {" )"} is amazing trip?
+                  {" )"} is amazing trip?
                 </Text>
                 <Text
                   style={{
@@ -151,11 +142,9 @@ const {
                   {description}
                 </Text>
               </View>
-                  <Text>Trip date: { 
-  tripDate}</Text>
-             
-                  <Text>Country: { 
-  country}</Text>
+              <Text>Trip date: {tripDate}</Text>
+
+              <Text>Country: {country}</Text>
               {/* Adding Edit and Delete buttons */}
               <View
                 style={{
@@ -164,26 +153,59 @@ const {
                   justifyContent: "space-between",
                 }}
               >
-               {dataProfile?.username ===createdBy?.username &&
-                <Button
-                title="Delete Trip"
-                style={{
-                  width: 100,
-                  height: 50,
-                  backgroundColor: "green",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: 30,
-                }}
-                onPress={() => deleteTripFun()}
-                />
-              }
+                {dataProfile?.username === createdBy?.username && (
+                  <>
+                    <Button
+                      style={{
+                        width: 100,
+                        height: 50,
+                        backgroundColor: "green",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      title="Update Trip"
+                      onPress={() =>
+                        navigation.navigate("updateTrip", {
+                          description,
+                          createdBy,
+                          country,
+                          tripDate,
+                          _id,
+                          image,
+                          title,
+                        })
+                      }
+                    />
+
+                    <Button
+                      title="Delete Trip"
+                      style={{
+                        width: 100,
+                        height: 50,
+                        backgroundColor: "green",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 30,
+                      }}
+                      onPress={() => deleteTripFun()}
+                    />
+                  </>
+                )}
               </View>
 
               <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 18, color: colors.black }}>
-                  Create By: {createdBy?.username}
-                </Text>
+                <Button
+                  title={`Created By: ${createdBy?.username}`}
+                  style={{
+                    fontSize: 14,
+                    color: colors.black,
+                    fontWeight: "bold",
+                    paddingTop: "10%",
+                  }}
+                  onPress={() => handlePressCreatedBy()}
+                />
+                {/* check if user = createdBBy the he can delete */}
               </View>
             </View>
           </View>
