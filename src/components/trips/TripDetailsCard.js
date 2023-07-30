@@ -11,9 +11,10 @@ import React from "react";
 import { colors } from "../../utils/colors/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import style from "react-native-datepicker/style";
+import { deleteTrip, updateTrip } from "../../apis/trips";
 import { BASE_URL } from "../../apis";
 import { useNavigation } from "@react-navigation/native";
-
+import { useMutation } from "@tanstack/react-query";
 const width = Dimensions.get("screen").width / 2 - 30;
 
 const TripDetails = ({
@@ -24,6 +25,18 @@ const TripDetails = ({
   createdBy,
 }) => {
   const navigation = useNavigation();
+  const { mutate: handleDeleteTripCard, error } = useMutation({
+    mutationFn: () => ({ deleteTrip }),
+    onSuccess: () => {
+      navigation.navigate(ROUTES.APPROUTES.HOME);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const handlePressCreatedBy = () => {
+    setSelectedCreatedBy(createdBy);
+  };
   return (
     <View
       style={{
@@ -94,7 +107,6 @@ const TripDetails = ({
                     fontWeight: "bold",
 
                     alignContent: "flex-start",
-                    backgroundColor: "red",
                   }}
                 >
                   Why{" "}
@@ -133,6 +145,7 @@ const TripDetails = ({
                   title="Update Trip"
                   onPress={() => navigation.navigate("updateTrip")}
                 />
+
                 <Button
                   title="Delete Trip"
                   style={{
@@ -143,14 +156,23 @@ const TripDetails = ({
                     alignItems: "center",
                     borderRadius: 30,
                   }}
-                  onPress={() => navigation.navigate("deleteTrip")}
+                  onPress={() => handleDeleteTripCard(trip.id)}
                 />
               </View>
 
               <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 18, color: colors.black }}>
-                  Create By: {createdBy?.username}
-                </Text>
+                <Button
+                  title="Created By: "
+                  style={{
+                    fontSize: 14,
+                    color: colors.black,
+                    fontWeight: "bold",
+                    paddingTop: "10%",
+                  }}
+                  onPress={() => handlePressCreatedBy()}
+                />
+                {/* check if user = createdBBy the he can delete */}
+                {/* Create By: {createdBy?.username} */}
               </View>
             </View>
           </View>

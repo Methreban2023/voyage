@@ -54,6 +54,7 @@ const TripDetail = ({ title, image, onPress = () => {} }) => {
         >
           {title}
         </Text>
+        
         <Button
           title="Update"
           onPress={() => {

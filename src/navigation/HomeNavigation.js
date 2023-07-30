@@ -5,6 +5,7 @@ import ROUTES from "./routes";
 import Home from "../screens/Home";
 import TripDetails from "../screens/TripDetails";
 import Profile from "../screens/Profile";
+import UpdateTrip from "../screens/UpdateTrip";
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const HomeNavigation = () => {
       screenOptions={{ headerTitle: "Test", headerShown: false }}
     >
       <Stack.Screen name={ROUTES.APPROUTES.HOME} component={Home} />
+      <Stack.Screen name={"updateTrip"} component={UpdateTrip} />
       <Stack.Screen
         name={ROUTES.APPROUTES.TRIPDETAILS}
         component={TripDetails}

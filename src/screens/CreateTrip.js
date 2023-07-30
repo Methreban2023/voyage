@@ -16,11 +16,6 @@ import DateTimePicker, {
   DateTimePickerAndroid,
 } from "@react-native-community/datetimepicker";
 import { colors } from "../utils/colors/colors";
-// import CountryCodeDropdownPicker from 'react-native-dropdown-country-picker'
-// import { useMutation } from "@tanstack/react-query";
-// import { colors } from "../utils/colors/colors";
-
-// const { setTrip } = useContext(TripContext);
 import theme, { COLORS, FONTS } from "../../constants/theme";
 import { createTrip } from "../apis/trips";
 import { CLOSING } from "ws";
@@ -35,12 +30,14 @@ const CreateTrip = ({ navigation }) => {
   const queryClient = useQueryClient();
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectCreatedBy, setSelectedCreatedBy] = useState(null);
 
   const handleCountrySelect = (country) => {
     setSelectedCountry(country.name);
   };
+
+  
   const { mutate: createTripFunction } = useMutation({
     mutationFn: () =>
       createTrip({
@@ -55,6 +52,7 @@ const CreateTrip = ({ navigation }) => {
       navigation.navigate(ROUTES.APPROUTES.HOME);
     },
   });
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -70,13 +68,10 @@ const CreateTrip = ({ navigation }) => {
     showMode("date");
   };
 
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // };
-
   const showCountrypicker = () => {
     showMode("Country");
   };
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -122,7 +117,7 @@ const CreateTrip = ({ navigation }) => {
             </View>
           </Pressable>
 
-          <Text style={styles.text}>Trip title</Text>
+          <Text style={styles.text}>Trip Title</Text>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
@@ -130,7 +125,7 @@ const CreateTrip = ({ navigation }) => {
             }}
             placeholder="Trip Title"
           />
-
+          {/* -------- */}
           <Text style={styles.text}>Trip Description</Text>
           <TextInput
             style={styles.input}
@@ -140,7 +135,7 @@ const CreateTrip = ({ navigation }) => {
             placeholder="Description"
           />
           <Text style={styles.text}>{tripInfo.description}</Text>
-          {/* <Text style={styles.text}>Trip Destination</Text> */}
+
           <>
             <Button onPress={showCountrypicker} title="Select Country" />
 
