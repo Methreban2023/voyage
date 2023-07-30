@@ -1,7 +1,6 @@
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
   FlatList,
   RefreshControl,
@@ -12,8 +11,10 @@ import TripCard from "../trips/TripCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrips } from "../../apis/trips";
 import { useState } from "react";
-const TripList = ({ handleAddTrip }) => {
+
+const TripList = () => {
   const [query, setQuery] = useState("");
+
   const {
     data: trips,
     isFetching,
@@ -46,10 +47,16 @@ const TripList = ({ handleAddTrip }) => {
       <FlatList
         data={trips?.filter((trip) => {
           if (trip.title.toLowerCase().includes(query.toLowerCase())) {
-            console.log(trip);
             return true;
           } else return false;
         })}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          marginTop: 10,
+          paddingBottom: 50,
+          // backgroundColor: "black",
+        }}
         numColumns={2}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
@@ -58,43 +65,23 @@ const TripList = ({ handleAddTrip }) => {
               flex: 1,
               width: 100,
               height: 200,
+              padding: 5,
             }}
           >
-            <TripCard title={item.title} image={item.image} />
+            <TripCard
+              title={item.title}
+              image={item.image}
+              description={item.description}
+              createdBy={item.createdBy}
+              onPress={() => {}}
+            />
           </View>
         )}
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={refetch} />
         }
-        contentContainerStyle={{
-          backgroundColor: "red",
-        }}
       />
     </>
-    // ScrollView
-    //   refreshControl={
-    //     <RefreshControl refreshing={isFetching} onRefresh={refetch} />
-    //   }
-    //   contentContainerStyle={{
-    //     padding: 5,
-    //     gap: 5,
-
-    //     backgroundColor: "red",
-    //   }}
-    // >
-    //   <Text>Hello</Text>
-
-    //   {trips?.map((trip) => (
-    //     <View style={{ width: 150, height: 150 }} key={trip._id}>
-    //       <TripCard
-    //         title={trip.title}
-    //         image={trip.image}
-    //         // description={trip.description}
-    //         onPress={handleAddTrip}
-    //       />
-    //     </View>
-    //   ))}
-    // </ScrollView>
   );
 };
 

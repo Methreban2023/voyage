@@ -1,76 +1,3 @@
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   SafeAreaView,
-//   TouchableOpacity,
-// } from "react-native";
-// import { useContext } from "react";
-// import { Button } from "react-native-paper";
-// import { useNavigation } from "@react-navigation/native";
-// import UserContext from "../context/UserContext";
-// import { removeToken } from "../apis/auth/storage";
-// import { getProfile } from "../apis/";
-// import { useQuery } from "@tanstack/react-query";
-// import { colors } from "../utils/colors/colors";
-// import { MaterialIcons } from "@expo/vector-icons";
-
-// const Profile = () => {
-//   const navigation = useNavigation();
-//   const { user, setUser } = useContext(UserContext);
-//   const { data: dataProfile } = useQuery({
-//     queryKey: ["profile"],
-//     queryFn: () => getProfile(),
-//   });
-//   const pressHandler = () => {
-//     removeToken();
-//     setUser(false);
-//   };
-
-//   return (
-//     <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
-//       <View>
-//         <Text style={{ fontSize: 24 }}>Profile</Text>
-//         <View></View>
-//         <View></View>
-//         <TouchableOpacity
-//           onPress={() => navigation.goBack()}
-//           style={{ position: "absolute", left: 0 }}
-//         >
-//           <MaterialIcons
-//             name="keyboard-arrow-left"
-//             size={24}
-//             color={colors.black}
-//           />
-//         </TouchableOpacity>
-
-//         <View
-//           style={{
-//             backgroundColor: colors.baby_blue,
-//             marginTop: 50,
-//           }}
-//         >
-//           {/* <TouchableOpacity onPress={editProfileHandler}>
-//             <Text>Edit my Profile </Text>
-//           </TouchableOpacity> */}
-//         </View>
-//         <Button
-//           title="SignOut"
-//           onPress={() => {
-//             pressHandler();
-//           }}
-//         >
-//           Sign Out
-//         </Button>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default Profile;
-
-// const styles = StyleSheet.create({});
-
 import {
   StyleSheet,
   Text,
@@ -85,19 +12,19 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, FONTS } from "../constants/theame";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import UserContext from "../context/UserContext";
 import ROUTES from "../navigation/routes";
-import image from "../components/image/tPwCLS.jpg";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { getProfile } from "../apis/profile/profile";
-import { removeToken } from "../apis/auth/storage";
+
 import TripCard from "../components/trips/TripCard";
 import { BASE_URL } from "../apis";
 const Profile = () => {
   const { user, setUser } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const {
     data: dataProfile,
@@ -106,11 +33,12 @@ const Profile = () => {
   } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(),
+    onSuccess: (data) => {
+      setUserInfo(data);
+    },
   });
-  const pressHandler = () => {
-    removeToken();
-    setUser(false);
-  };
+  // console.log(` this is a profile infor = ${userInfo.firstName}`);
+
   console.log(`${BASE_URL}/${dataProfile?.image}`);
   return (
     <SafeAreaView
@@ -120,32 +48,41 @@ const Profile = () => {
         paddingHorizontal: 22,
       }}
     >
+      <View
+        style={{
+          marginHorizontal: 12,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: 20,
+        }}
+      ></View>
       <StatusBar backgroundColor={COLORS.gray} />
       <View style={{ width: "100%" }}>
         <Image
           source={require("../components/image/tPwCLS.jpg")}
           resizeMode="cover"
           style={{
-            height: 228,
+            height: 200,
             width: "100%",
           }}
         />
       </View>
       <View style={{ flex: 1, alignItems: "center" }}>
         <Image
-          source={{ uri: `${BASE_URL}/${dataProfile?.image}` }}
+          source={{ uri: `${BASE_URL}/${userInfo?.image}` }}
           resizeMode="contain"
           style={{
-            height: 155,
-            width: 155,
+            height: 130,
+            width: 130,
             borderRadius: 999,
             borderColor: COLORS.primary,
             borderWidth: 2,
-            marginTop: -90,
+            marginTop: -68,
           }}
         />
         <Text style={{ ...FONTS.h3, color: COLORS.primary, marginVertical: 8 }}>
-          {`${dataProfile?.firstName} ${dataProfile?.lastName}`}
+          {`${userInfo?.firstName} ${userInfo?.lastName}`}
         </Text>
         <Text
           style={{
@@ -153,7 +90,7 @@ const Profile = () => {
             ...FONTS.body4,
           }}
         >
-          {dataProfile?.bio}
+          {userInfo?.bio}
         </Text>
         <View
           style={{
@@ -162,21 +99,16 @@ const Profile = () => {
             alignItems: "center",
           }}
         >
-          <MaterialIcons name="location-on" size={24} color="black" />
-          <Text
-            style={{
-              ...FONTS.body4,
-              marginLeft: 4,
-            }}
-          >
-            Yarmouk, Kuwait
-          </Text>
+          <Text> Bio: {userInfo.bio}</Text>
         </View>
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(ROUTES.APPROUTES.EDITPROFILE);
+              navigation.navigate(ROUTES.APPROUTES.EDITPROFILE, {
+                userInfo: userInfo,
+                setUserInfo: setUserInfo,
+              });
             }}
             style={{
               width: 124,
@@ -200,8 +132,9 @@ const Profile = () => {
         </View>
         <View
           style={{
-            width: "100%",
-            height: 250,
+            width: "109%",
+            height: 400,
+            padding: 20,
           }}
         >
           <>
@@ -229,14 +162,7 @@ const Profile = () => {
             />
           </>
         </View>
-        <Button
-          title="SignOut"
-          onPress={() => {
-            pressHandler();
-          }}
-        >
-          Sign Out
-        </Button>
+
       </View>
     </SafeAreaView>
   );

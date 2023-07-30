@@ -9,11 +9,13 @@ import { colors } from "../../utils/colors/colors";
 import { useState } from "react";
 import React from "react";
 import { Searchbar } from "react-native-paper";
+import { search } from "react-native-country-picker-modal/lib/CountryService";
 const FilterList = ({ list = [], onPress = () => {}, setQuery }) => {
   return (
     <View>
       <Searchbar
         placeholder="Search"
+        style={{ borderRadius: 17, margin: 5, backgroundColor: "#FEAA027A" }}
         onChangeText={(query) => setQuery(query)}
       />
       <ScrollView
@@ -22,18 +24,19 @@ const FilterList = ({ list = [], onPress = () => {}, setQuery }) => {
       >
         {list.map((item, index) => (
           <TouchableHighlight
-            onPress={() => {
-              onPress(item);
-            }}
             key={index}
+            activeOpacity={0.8}
+            onPress={(item) => {
+              handleOnPress;
+            }}
             style={{
               minWidth: 70,
-              height: "100%",
+              height: "100",
               padding: 5,
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "#00000070",
-              borderRadius: 17,
+              borderRadius: 10,
               flexDirection: "row",
             }}
           >
