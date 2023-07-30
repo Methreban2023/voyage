@@ -11,8 +11,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState, useContext } from "react";
-import * as ImagePicker from "expo-image-picker";
-import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+// import * as ImagePicker from "expo-image-picker";
+// import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
 import { colors } from "../utils/colors/colors";
 // import CountryCodeDropdownPicker from 'react-native-dropdown-country-picker'
 // import { useMutation } from "@tanstack/react-query";
@@ -34,7 +35,7 @@ const CreateTrip = ({ navigation }) => {
   const [tripInfo, setTripInfo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(new Date(1598051730000));
-const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
  
@@ -91,6 +92,29 @@ const queryClient = useQueryClient()
       setImage(result.assets[0].uri);
     }
   };
+
+
+
+//another date picker 
+//test 
+    const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+      const today = new Date();
+      const startDate = getFormatedDate(
+        today.setDate(today.getDate() + 1),
+        "YYYY/MM/DD"
+      );
+      const [selectedStartDate, setSelectedStartDate] = useState("01/01/1990");
+      const [startedDate, setStartedDate] = useState("12/12/2023");
+    
+      const handleChangeStartDate = (propDate) => {
+        setStartedDate(propDate);
+      };
+    
+      const handleOnPressStartDate = () => {
+        setOpenStartDatePicker(!openStartDatePicker);
+      };
+      
+
 
 console.log(tripInfo)
 
@@ -157,7 +181,7 @@ console.log(tripInfo)
   
     </>
  <Text style={styles.text}>Trip Date</Text>
-  <>
+  {/* <>
   <Button onPress={showDatepicker} title="Show date picker!" />
     
       {show && (
@@ -169,8 +193,78 @@ console.log(tripInfo)
           onChange={onChange}
         />
       )}
-    </>
+    </> */}
 
+<Modal
+        animationType="slide"
+        transparent={true}
+        visible={openStartDatePicker}
+      >
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{
+              margin: 20,
+              backgroundColor: COLORS.white,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 20,
+              padding: 35,
+              width: "90%",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+            }}
+          >
+            <DatePicker
+              mode="calendar"
+              minimumDate={startDate}
+              selected={startedDate}
+              onDateChanged={handleChangeStartDate}
+              onSelectedChange={(date) => setSelectedStartDate(date)}
+              options={{
+                backgroundColor: COLORS.white,
+                textHeaderColor: "#ffa500",
+                textDefaultColor: COLORS.black,
+                selectedTextColor: COLORS.black,
+                mainColor: "#ffa500",
+                textSecondaryColor: COLORS.green,
+                borderColor:"#ffa500",
+              }}
+            />
+
+            <TouchableOpacity onPress={handleOnPressStartDate}>
+              <Text style={{ ...FONTS.body3, color: COLORS.black}}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      
+<TouchableOpacity
+              onPress={handleOnPressStartDate}
+              style={{
+                height: 44,
+                width: "100%",
+                borderColor: COLORS.white,
+                borderWidth: 1,
+                borderRadius: 4,
+                marginVertical: 6,
+                justifyContent: "center",
+                paddingLeft: 8,
+              }}
+            />
+              <Text>{selectedStartDate}</Text> 
   <Button
         title="Create"
         onPress={() => {
@@ -179,7 +273,7 @@ console.log(tripInfo)
       />
     </View>
   );
-};
+      }
 
 export default CreateTrip;
 
