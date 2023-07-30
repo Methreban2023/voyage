@@ -8,7 +8,9 @@ import {
   Pressable,
   Modal,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useContext } from "react";
 import * as ImagePicker from "expo-image-picker";
@@ -26,7 +28,7 @@ import { CLOSING } from "ws";
 import { useMutation, useQueryClient } from "@tanstack/react-query/build/lib";
 import ROUTES from "../navigation/routes";
 import CountryPicker from "react-native-country-picker-modal";
-
+import coverImage from "../components/image/cover.jpg";
 const CreateTrip = ({ navigation }) => {
   const [tripInfo, setTripInfo] = useState({});
   const [image, setImage] = useState(null);
@@ -48,6 +50,7 @@ const CreateTrip = ({ navigation }) => {
         image: image,
         tripDate: selectedStartDate,
         country: selectedCountry,
+
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["trips"]);
@@ -86,7 +89,6 @@ const CreateTrip = ({ navigation }) => {
   };
 
 
-
 //another date picker 
 //test 
     const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
@@ -112,15 +114,35 @@ console.log(tripInfo)
 
 
   return (
+
     <SafeAreaView
+  
       style={{
         flex: 1,
         backgroundColor: COLORS.white,
         paddingHorizontal: 22,
       }}
     >
+      <ImageBackground
+          source={coverImage}
+          resizeMode="cover"
+          style={styles.imageBackground}
+        >
+          <View
+            style={{
+              flex: 1,
+              position: "absolute",
+              backgroundColor: "rgba(255,255,255,0.75)",
+              paddingHorizontal: 22,
+              height: "100%",
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}/>
+         
       <View
         style={{
+          paddingTop:"5%",
           marginHorizontal: 12,
           flexDirection: "row",
           justifyContent: "center",
@@ -129,10 +151,11 @@ console.log(tripInfo)
         }}
       >
         <View style={styles.container}>
-          <Text style={{fontSize:50 }}>Create</Text>
+          <Text style={{fontSize:50, color: colors.orange,
+ }}>Create</Text>
           {/* IMAGE */}
           <Pressable onPress={pickImage}>
-            <View style={styles.Trip_image}>
+            <View style={styles.Trip_image}  >
               {image && (
                 <Image
                   source={{ uri: image }}
@@ -173,7 +196,7 @@ console.log(tripInfo)
         containerButtonStyle={{borderWidth:2, borderColor:colors.orange, width:150, paddingHorizontal:5, paddingVertical:3, borderRadius:5, justifyContent:"center", alignItems:"center"}}
         />
         {selectedCountry && (
-          <Text style={styles.selectedCountryText}>Selected Country: {selectedCountry}</Text>
+          <Text style={styles.selectedCountryText }>Selected Country: {selectedCountry}</Text>
         )}
      
     </View>
@@ -207,7 +230,7 @@ console.log(tripInfo)
                  width: 0,
                  height: 2,
                },
-               shadowOpacity: 0.25,
+               shadowOpacity: 0.5,
                shadowRadius: 4,
                elevation: 5,
              }}
@@ -251,7 +274,8 @@ console.log(tripInfo)
                 paddingLeft: 8,
               }}
             >
-              <Text> Trip date: {selectedStartDate}</Text> 
+              <Text style={{fontSize:20 }}> Choose Trip date: </Text> 
+              <Text style={{fontSize:20, color:colors.baby_blue}}> {selectedStartDate}</Text>
               </TouchableOpacity>
 
 
@@ -267,12 +291,17 @@ console.log(tripInfo)
 
 
 
-  <Button
-        title="Create"
+  <Button 
+  
+        title="Create"  
+     
         onPress={() => {
           createTripFunction();
         }}
       />
+
+
+          </ImageBackground>
     </SafeAreaView>
   );
       }
@@ -318,6 +347,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightgray,
     borderRadius:17,
     overflow: "hidden",
+    paddingTop:"30%"
   },
 
     countryStyle: {
@@ -327,8 +357,15 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     selectedCountryText: {
-      fontSize: 18,
+      fontSize: 30,
       marginTop: 20,
+      color: colors.light_blue
+    },
+    imageBackground: {
+      flex: 1,
+      justifyContent: "center",
+      height: "100%",
+      width: "100%",
     },
 
 });

@@ -94,6 +94,7 @@ const {
                 height: "100%",
                 width: "100%",
                 alignItems: "center",
+               
               }}
             >
               <Image
@@ -103,7 +104,9 @@ const {
                   resizeMode: "contain",
                   width: "100%",
                   height: "100%",
-                  padding: "5%",
+             
+                  paddingTop: "70%",
+                 
                 }}
               />
 
@@ -122,9 +125,9 @@ const {
                   style={{
                     fontSize: 20,
                     fontWeight: "bold",
-
+color: colors.orange,
                     alignContent: "flex-start",
-                    backgroundColor: "#9acd32",
+                    
                   }}
                 >
                   Why{" ("}
@@ -132,7 +135,7 @@ const {
                     style={{
                       fontStyle: "italic",
                       fontSize: 20,
-                      color: colors.dark_blue,
+                      color: colors.light_blue,
                     }}
                   >
                     {title}
@@ -142,19 +145,20 @@ const {
                 </Text>
                 <Text
                   style={{
-                    color: "grey",
+                    color: "black",
                     fontSize: 16,
                     lineHeight: 22,
                     marginTop: 10,
+                  
                   }}
                 >
                   {description}
                 </Text>
               </View>
-                  <Text>Trip date: { 
+                  <Text  style={{ fontSize:20, color: colors.orange}}>Trip date: { 
   tripDate}</Text>
              
-                  <Text>Country: { 
+                  <Text style={{ fontSize:20, color: colors.orange}}>Country: { 
   country}</Text>
               {/* Adding Edit and Delete buttons */}
               <View
@@ -170,18 +174,19 @@ const {
                 style={{
                   width: 100,
                   height: 50,
-                  backgroundColor: "green",
+              
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: 30,
-                }}
+                  color: colors.orange
+                            }}
                 onPress={() => deleteTripFun()}
                 />
               }
               </View>
 
               <View style={{ alignItems: "flex-end" }}>
-                <Text style={{ fontSize: 18, color: colors.black }}>
+                <Text style={{ fontSize:20, color: colors.light_blue }}>
                   Create By: {createdBy?.username}
                 </Text>
               </View>
