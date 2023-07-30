@@ -86,6 +86,7 @@ const TripDetails = ({
                 height: "100%",
                 width: "100%",
                 alignItems: "center",
+               
               }}
             >
               <Image
@@ -95,7 +96,9 @@ const TripDetails = ({
                   resizeMode: "contain",
                   width: "100%",
                   height: "100%",
-                  padding: "5%",
+             
+                  paddingTop: "70%",
+                 
                 }}
               />
 
@@ -114,9 +117,9 @@ const TripDetails = ({
                   style={{
                     fontSize: 20,
                     fontWeight: "bold",
-
+color: colors.orange,
                     alignContent: "flex-start",
-                    backgroundColor: "#9acd32",
+                    
                   }}
                 >
                   Why{" ("}
@@ -124,7 +127,7 @@ const TripDetails = ({
                     style={{
                       fontStyle: "italic",
                       fontSize: 20,
-                      color: colors.dark_blue,
+                      color: colors.light_blue,
                     }}
                   >
                     {title}
@@ -133,18 +136,21 @@ const TripDetails = ({
                 </Text>
                 <Text
                   style={{
-                    color: "grey",
+                    color: "black",
                     fontSize: 16,
                     lineHeight: 22,
                     marginTop: 10,
+                  
                   }}
                 >
                   {description}
                 </Text>
               </View>
-              <Text>Trip date: {tripDate}</Text>
-
-              <Text>Country: {country}</Text>
+                  <Text  style={{ fontSize:20, color: colors.orange}}>Trip date: { 
+  tripDate}</Text>
+             
+                  <Text style={{ fontSize:20, color: colors.orange}}>Country: { 
+  country}</Text>
               {/* Adding Edit and Delete buttons */}
               <View
                 style={{
@@ -153,9 +159,9 @@ const TripDetails = ({
                   justifyContent: "space-between",
                 }}
               >
-                {dataProfile?.username === createdBy?.username && (
-                  <>
-                    <Button
+               {dataProfile?.username ===createdBy?.username &&
+               <>
+                <Button
                       style={{
                         width: 100,
                         height: 50,
@@ -177,35 +183,27 @@ const TripDetails = ({
                         })
                       }
                     />
-
-                    <Button
-                      title="Delete Trip"
-                      style={{
-                        width: 100,
-                        height: 50,
-                        backgroundColor: "green",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 30,
-                      }}
-                      onPress={() => deleteTripFun()}
-                    />
-                  </>
-                )}
+                <Button
+                title="Delete Trip"
+                style={{
+                  width: 100,
+                  height: 50,
+              
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 30,
+                  color: colors.orange
+                }}
+                onPress={() => deleteTripFun()}
+                />
+                </>
+              }
               </View>
 
               <View style={{ alignItems: "flex-end" }}>
-                <Button
-                  title={`Created By: ${createdBy?.username}`}
-                  style={{
-                    fontSize: 14,
-                    color: colors.black,
-                    fontWeight: "bold",
-                    paddingTop: "10%",
-                  }}
-                  onPress={() => handlePressCreatedBy()}
-                />
-                {/* check if user = createdBBy the he can delete */}
+                <Text style={{ fontSize:20, color: colors.light_blue }}>
+                  Create By: {createdBy?.username}
+                </Text>
               </View>
             </View>
           </View>
