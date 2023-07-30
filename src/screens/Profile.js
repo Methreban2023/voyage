@@ -91,8 +91,8 @@ const Profile = () => {
           }}
         >
           {userInfo?.bio}
-        </Text> */}
-        <View
+        </Text>
+        {/* <View
           style={{
             flexDirection: "row",
             marginVertical: 6,
@@ -100,7 +100,7 @@ const Profile = () => {
           }}
         >
           <Text> Bio: {userInfo.bio}</Text>
-        </View>
+        </View> */}
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
