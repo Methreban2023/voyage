@@ -11,7 +11,6 @@ import React from "react";
 import { colors } from "../../utils/colors/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import style from "react-native-datepicker/style";
-import { deleteTrip, updateTrip } from "../../apis/trips";
 import { BASE_URL } from "../../apis";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -33,7 +32,7 @@ const TripDetails = ({
 }) => {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
-
+  console.log({ createdBy });
   const { data: dataProfile } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getProfile(),
@@ -166,7 +165,17 @@ const TripDetails = ({
                         borderRadius: 30,
                       }}
                       title="Update Trip"
-                      onPress={() => navigation.navigate("updateTrip")}
+                      onPress={() =>
+                        navigation.navigate("updateTrip", {
+                          description,
+                          createdBy,
+                          country,
+                          tripDate,
+                          _id,
+                          image,
+                          title,
+                        })
+                      }
                     />
 
                     <Button
@@ -187,7 +196,7 @@ const TripDetails = ({
 
               <View style={{ alignItems: "flex-end" }}>
                 <Button
-                  title="Created By: "
+                  title={`Created By: ${createdBy?.username}`}
                   style={{
                     fontSize: 14,
                     color: colors.black,
@@ -197,7 +206,6 @@ const TripDetails = ({
                   onPress={() => handlePressCreatedBy()}
                 />
                 {/* check if user = createdBBy the he can delete */}
-                {/* Create By: {createdBy?.username} */}
               </View>
             </View>
           </View>

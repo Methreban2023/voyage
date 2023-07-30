@@ -8,6 +8,7 @@ import {
   Pressable,
   Modal,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useContext } from "react";
@@ -21,6 +22,7 @@ import { CLOSING } from "ws";
 import { useMutation, useQueryClient } from "@tanstack/react-query/build/lib";
 import ROUTES from "../navigation/routes";
 import CountryPicker from "react-native-country-picker-modal";
+import { BASE_URL } from "../apis";
 
 const CreateTrip = ({ navigation }) => {
   const [tripInfo, setTripInfo] = useState({});
@@ -112,14 +114,16 @@ const CreateTrip = ({ navigation }) => {
         paddingHorizontal: 22,
       }}
     >
-      <View
-        style={{
-          marginHorizontal: 12,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: 20,
-        }}
+      <ScrollView
+        style={
+          {
+            // marginHorizontal: 12,
+            // flexDirection: "row",
+            // justifyContent: "center",
+            // alignItems: "center",
+            // marginBottom: 20,
+          }
+        }
       >
         <View style={styles.container}>
           <Text style={{ fontSize: 50 }}>Create</Text>
@@ -253,14 +257,14 @@ const CreateTrip = ({ navigation }) => {
             <Text> Trip date: {selectedStartDate}</Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      <Button
-        title="Create"
-        onPress={() => {
-          createTripFunction();
-        }}
-      />
+        <Button
+          title="Create"
+          onPress={() => {
+            createTripFunction();
+          }}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };

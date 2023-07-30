@@ -1,29 +1,40 @@
 import {
-  KeyboardAvoidingView,
+  Button,
   StyleSheet,
   Text,
+  TextInput,
   View,
-  Button,
+  Image,
+  Pressable,
+  Modal,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { colors } from "../utils/colors/colors";
-import { MaterialIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { TextInput } from "react-native-paper";
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateTrip } from "../apis/trips/index";
+import React, { useState, useContext, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import CountryPicker from "react-native-country-picker-modal";
-import DateTimePicker, {
-  DateTimePickerAndroid,
-} from "@react-native-community/datetimepicker";
-import { useNavigation } from "@react-navigation/native";
-import ROUTES from "../navigation/routes";
-import { Pressable, Image } from "react-native";
 
-const UpdateTrip = ({ route }) => {
-  const navigation = useNavigation();
+import DatePicker, { getFormatedDate } from "react-native-modern-datepicker";
+import { colors } from "../utils/colors/colors";
+import theme, { COLORS, FONTS } from "../../constants/theme";
+import { createTrip } from "../apis/trips";
+import { CLOSING } from "ws";
+import { useMutation, useQueryClient } from "@tanstack/react-query/build/lib";
+import ROUTES from "../navigation/routes";
+import CountryPicker from "react-native-country-picker-modal";
+import { BASE_URL } from "../apis";
+
+const UpdateTrip = ({ navigation, route }) => {
+  const {
+    description,
+    createdBy,
+    country,
+    tripDate,
+    _id,
+    image: oldImage,
+    title,
+  } = route.params;
+
   const [tripInfo, setTripInfo] = useState({});
   const [image, setImage] = useState(null);
   const [date, setDate] = useState(new Date(1598051730000));
@@ -31,29 +42,27 @@ const UpdateTrip = ({ route }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectCreatedBy, setSelectedCreatedBy] = useState(null);
+
   const handleCountrySelect = (country) => {
     setSelectedCountry(country.name);
   };
 
-  const { mutate: updateTripFunction } = useMutation({
+  const { mutate: createTripFunction } = useMutation({
     mutationFn: () =>
-      updateTrip({
+      createTrip({
         title: tripInfo.title,
         description: tripInfo.description,
         image: image,
-        tripDate: date,
+        tripDate: selectedStartDate,
         country: selectedCountry,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries(["trips"]);
       navigation.navigate(ROUTES.APPROUTES.HOME);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
 
-  // done image picker
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -72,6 +81,7 @@ const UpdateTrip = ({ route }) => {
   const showCountrypicker = () => {
     showMode("Country");
   };
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -85,146 +95,201 @@ const UpdateTrip = ({ route }) => {
     }
   };
 
+  //another date picker
+  //test
+  const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+  const today = new Date();
+  const startDate = getFormatedDate(
+    today.setDate(today.getDate() + 1),
+    "YYYY/MM/DD"
+  );
+  const [selectedStartDate, setSelectedStartDate] = useState("01/01/1990");
+  const [startedDate, setStartedDate] = useState("12/12/2023");
+
+  const handleChangeStartDate = (propDate) => {
+    setStartedDate(propDate);
+  };
+
+  const handleOnPressStartDate = () => {
+    setOpenStartDatePicker(!openStartDatePicker);
+  };
+
+  useEffect(() => {
+    setTripInfo({
+      description,
+      createdBy,
+      country,
+      tripDate,
+      _id,
+      image: oldImage,
+      title,
+    });
+    setSelectedCountry(country);
+    setSelectedStartDate(tripDate);
+  }, []);
+  console.log(country);
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "height" : "height"}
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+        paddingHorizontal: 22,
+      }}
     >
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: colors.white,
-          paddingHorizontal: 22,
-        }}
+      <ScrollView
+        style={
+          {
+            // marginHorizontal: 12,
+            // flexDirection: "row",
+            // justifyContent: "center",
+            // alignItems: "center",
+            // marginBottom: 20,
+          }
+        }
       >
-        <View
-          style={{
-            flex: 1,
-            marginHorizontal: 12,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 20,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              console.log("first");
-              navigation.navigate(ROUTES.APPROUTES.TRIPDETAILS);
-            }}
-            style={{
-              flex: 1,
-              flexDirection: "row",
-            }}
-          >
-            <MaterialIcons
-              name="keyboard-arrow-left"
-              size={24}
-              color={colors.white}
-            />
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: colors.white,
-              }}
-            >
-              Back to Trip Details
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <Pressable onPress={pickImage}>
-          <View style={styles.Trip_image}>
-            {image && (
-              <Image
-                source={{ uri: image }}
-                style={{ width: 100, height: 100 }}
-              />
-            )}
-          </View>
-        </Pressable>
-
-        <Text style={styles.text}>Trip Title</Text>
-
-        <TextInput
-          placeholder="Trip Title"
-          style={styles.input}
-          onChangeText={(value) => {
-            setTripInfo({ ...tripInfo, title: value });
-          }}
-          value={tripInfo.title}
-        />
-
-        <Text style={styles.text}>Trip Description</Text>
-
-        <TextInput
-          placeholder="Description"
-          style={styles.input}
-          onChangeText={(value) => {
-            setTripInfo({ ...tripInfo, description: value });
-          }}
-          value={tripInfo.description}
-        />
-        {/* ==== do styling  =====    */}
-        <View>
-          <Button onPress={showCountrypicker} title="Select Country" />
-          {show && (
-            <View style={styles.countryStyle}>
-              <CountryPicker
-                withFilter
-                withFlag
-                withCountryNameButton
-                withAlphaFilter
-                onSelect={handleCountrySelect}
-              />
-              {selectedCountry && (
-                <Text style={styles.selectedCountryText}>
-                  Selected Country: {selectedCountry}
-                </Text>
+        <View style={styles.container}>
+          <Text style={{ fontSize: 50 }}>Update</Text>
+          {/* IMAGE */}
+          <Pressable onPress={pickImage}>
+            <View style={styles.Trip_image}>
+              {(image || oldImage) && (
+                <Image
+                  source={{ uri: image || `${BASE_URL}/${oldImage}` }}
+                  style={{ width: "100%", height: "100%" }}
+                />
               )}
             </View>
-          )}
-        </View>
+          </Pressable>
 
-        <Text style={styles.text}>Trip Date</Text>
-        <>
-          <Button onPress={showDatepicker} title="Select Date" />
+          <Text style={styles.text}>Trip Title</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setTripInfo({ ...tripInfo, title: value });
+            }}
+            placeholder="Trip Title"
+            value={tripInfo?.title}
+          />
+          {/* -------- */}
+          <Text style={styles.text}>Trip Description</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setTripInfo({ ...tripInfo, description: value });
+            }}
+            placeholder="Description"
+            value={tripInfo?.description}
+          />
+          <Text style={styles.text}>{tripInfo.description}</Text>
+          {/* <Text style={styles.text}>Trip Destination</Text> */}
 
-          {show && (
-            <DateTimePicker
-              testID="datePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              onChange={onChange}
+          <View style={{ width: "90%" }}>
+            <CountryPicker
+              withFilter
+              withFlag
+              withCountryNameButton
+              withAlphaFilter
+              onSelect={handleCountrySelect}
+              containerButtonStyle={{
+                borderWidth: 2,
+                borderColor: colors.orange,
+                width: 150,
+                paddingHorizontal: 5,
+                paddingVertical: 3,
+                borderRadius: 5,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             />
-          )}
-        </>
+            {(selectedCountry || country) && (
+              <Text style={styles.selectedCountryText}>
+                Selected Country: {selectedCountry}
+              </Text>
+            )}
+          </View>
 
-        <View style={{ flex: 1 }}>
-          <TouchableOpacity
-            onPress={() => {
-              updateTripFunction();
-            }}
-            style={{
-              backgroundColor: colors.primary,
-              borderRadius: 6,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={openStartDatePicker}
           >
-            <Text
+            <View
               style={{
-                color: colors.white,
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              Save Change
-            </Text>
+              <View
+                style={{
+                  margin: 20,
+                  backgroundColor: COLORS.white,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 20,
+                  padding: 35,
+                  width: "90%",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 4,
+                  elevation: 5,
+                }}
+              >
+                <DatePicker
+                  mode="calendar"
+                  minimumDate={startDate}
+                  selected={startedDate}
+                  onDateChanged={handleChangeStartDate}
+                  onSelectedChange={(date) => setSelectedStartDate(date)}
+                  options={{
+                    backgroundColor: COLORS.white,
+                    textHeaderColor: "#ffa500",
+                    textDefaultColor: COLORS.black,
+                    selectedTextColor: COLORS.black,
+                    mainColor: "#ffa500",
+                    textSecondaryColor: COLORS.green,
+                    borderColor: "#ffa500",
+                  }}
+                />
+
+                <TouchableOpacity onPress={handleOnPressStartDate}>
+                  <Text style={{ ...FONTS.body3, color: COLORS.black }}>
+                    Close
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          <TouchableOpacity
+            onPress={handleOnPressStartDate}
+            style={{
+              height: 44,
+              width: "100%",
+              borderColor: COLORS.white,
+              borderWidth: 1,
+              borderRadius: 4,
+              marginVertical: 6,
+              justifyContent: "center",
+              paddingLeft: 8,
+            }}
+          >
+            <Text> Trip date: {selectedStartDate}</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+
+        <Button
+          title="Update"
+          onPress={() => {
+            createTripFunction();
+          }}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -264,10 +329,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   Trip_image: {
-    width: 100,
-    height: 100,
-    backgroundColor: "grey",
-    borderRadius: 130,
+    width: 300,
+    height: 200,
+    backgroundColor: colors.lightgray,
+    borderRadius: 17,
     overflow: "hidden",
   },
 
