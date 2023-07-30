@@ -67,7 +67,7 @@ const SignUp = ({ navigation }) => {
   };
   const passwordChangeHandler = (value) => {
     const err = validatePassword(value);
-    // console.log("===============>", err);
+
     setPasswordError(err);
     if (err === "") {
       setPassword(value);
